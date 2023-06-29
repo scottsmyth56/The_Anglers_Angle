@@ -13,6 +13,12 @@ class User(models.Model):
     profile_picture = CloudinaryField('image', default='placeholder')
 
 
+class Group(models.Model):
+    group_id = models.AutoField(primary_key=True)
+    group_name = models.CharField(max_length=100)
+    description = models.TextField()
+
+
 class Post(models.Model):
     post_id = models.AutoField(primary_key=True)
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -22,7 +28,8 @@ class Post(models.Model):
     image2 = CloudinaryField('image', default='placeholder')
     timestamp = models.DateTimeField()
     category = models.CharField(max_length=100, null=True, blank=True)
-    group = models.ForeignKey(Group, on_delete=models.CASCADE, null=True, blank=True)
+    group = models.ForeignKey(
+        Group, on_delete=models.CASCADE, null=True, blank=True)
 
     class Meta:
         ordering = ["-timestamp"]
@@ -43,12 +50,25 @@ class Comment(models.Model):
 
 
 class Like(models.Model):
-    like_id - models.AutoField(primary_key=True)
+    like_id = models.AutoField(primary_key=True)
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
     post_id = models.ForeignKey(Post, on_delete=models.CASCADE)
 
 
-class Group(models.Model):
-    group_name = models.CharField(max_length=100)
-    description = models.TextField()
-    
+class UserGroup(models.Model):
+    user_id = models.ForeignKey(User, on_delete=models.CASCADE)
+    group_id = models.ForeignKey
+
+
+class Competition(models.Model):
+    competition_id = models.AutoField(primary_key=True)
+    title = models.CharField(max_length=200)
+    location = models.CharField(max_length=300)
+    description = models.CharField(max_length=300)
+    category = models.CharField(max_length=150)
+    date = models.DateTimeField()
+
+
+class CompetitionUser(models.Model):
+    user_id = models.ForeignKey(User, on_delete=models.CASCADE)
+    competition_id = models.ForeignKey(Competition, on_delete=models.CASCADE)
