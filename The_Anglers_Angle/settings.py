@@ -30,7 +30,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 DEBUG = True
 
 ALLOWED_HOSTS = ["8000-scottsmyth56-the-anglers-ahncinhraa.us2.codeanyapp.com",
-                 'the-anglers-angle.herokuapp.com', 'localhost']
+                 'the-anglers-angle-b8d0becc6882.herokuapp.com', 'localhost']
 
 
 # Application definition
