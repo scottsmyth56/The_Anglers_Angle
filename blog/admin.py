@@ -1,15 +1,15 @@
 from django.contrib import admin
-from .models import User
-from .models import Post
-from .models import Comment
-from .models import Group
-from .models import Like
-from .models import Competition
-from .models import CompetitionUser
-from .models import UserGroup
+from .models import User, Post, Comment, Competition, Group, Like
+from .models import Competition, CompetitionUser, UserGroup
+from django_summernote.admin import SummernoteModelAdmin
 
 
-admin.site.register(User)
+@admin.register(User)
+class UserAdmin(SummernoteModelAdmin):
+    list_display = ('first_name', 'last_name', 'username')
+    search_fields = ('username', 'first_name', 'last_name')
+
+
 admin.site.register(Post)
 admin.site.register(Comment)
 admin.site.register(Group)

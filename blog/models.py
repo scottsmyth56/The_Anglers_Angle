@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import User
+# from django.contrib.auth.models import User
 from cloudinary.models import CloudinaryField
 from cloudinary_storage.storage import RawMediaCloudinaryStorage
 
