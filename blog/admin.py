@@ -10,7 +10,22 @@ class UserAdmin(SummernoteModelAdmin):
     search_fields = ('username', 'first_name', 'last_name')
 
 
-admin.site.register(Post)
+@admin.register(Post)
+class PostAdmin(SummernoteModelAdmin):
+    list_display = ('title', 'content', 'category', 'group', 'author')
+    search_fields = ('title', 'category', 'content')
+    list_filter = ('timestamp',)
+
+    def author(self, obj):
+        return obj.user_id.username
+
+    author.short_description = "Author"
+
+
+# @admin.register(Comment)
+# class CommentAdmin(SummernoteModelAdmin):
+#     list_display = ('')
+
 admin.site.register(Comment)
 admin.site.register(Group)
 admin.site.register(Like)
