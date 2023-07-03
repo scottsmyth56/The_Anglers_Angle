@@ -57,7 +57,7 @@ class Like(models.Model):
 
 class UserGroup(models.Model):
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
-    group_id = models.ForeignKey
+    group_id = models.ForeignKey(Group, on_delete=models.CASCADE)
 
 
 class Competition(models.Model):
