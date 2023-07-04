@@ -1,0 +1,15 @@
+{% for post in posts %}
+
+<div class="card mb-3">
+    {% if 'placeholder' in post.image1.url %}
+    <img src="{{defaultImage.url}}" class="card-img-top" alt="Post Image">
+    {% else %}
+    <img src="{{ post.image_url }}" class="card-img-top" alt="Post Image">
+    {% endif %}
+    <div class="card-body">
+        <h5 class="card-title">{{ post.title }}</h5>
+        <p class="card-text">{{ post.content }}</p>
+        <a href="{{ post.url }}" class="btn btn-primary">Read More</a>
+    </div>
+</div>
+{% endfor %}
