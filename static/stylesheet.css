@@ -1,0 +1,35 @@
+.header,
+.footer {
+    background-color: #f8f9fa;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.header-logo,
+.footer-logo {
+    width: 50px;
+    height: 50px;
+    margin-right: 10px;
+}
+
+.header-title,
+.footer-title {
+    color: #333;
+    font-size: 24px;
+}
+
+.footer {
+    background-color: #333;
+    color: #fff;
+}
+
+.footer a {
+    color: #fff;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.footer a:hover {
+    color: #ccc;
+}

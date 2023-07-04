@@ -15,7 +15,8 @@ class Migration(migrations.Migration):
             model_name='usergroup',
             name='group_id',
             field=models.ForeignKey(
-                default='1', on_delete=django.db.models.deletion.CASCADE, to='blog.group'),
+                default='1', on_delete=django.db.models.deletion.CASCADE,
+                to='blog.group'),
             preserve_default=False,
         ),
     ]
