@@ -1,15 +1,28 @@
-{% for post in posts %}
+{%block content %}
 
-<div class="card mb-3">
-    {% if 'placeholder' in post.image1.url %}
-    <img src="{{defaultImage.url}}" class="card-img-top" alt="Post Image">
-    {% else %}
-    <img src="{{ post.image_url }}" class="card-img-top" alt="Post Image">
-    {% endif %}
-    <div class="card-body">
-        <h5 class="card-title">{{ post.title }}</h5>
-        <p class="card-text">{{ post.content }}</p>
-        <a href="{{ post.url }}" class="btn btn-primary">Read More</a>
+
+<div class="col-12 mt-3">
+    <div class="row">
+        {% for post in posts %}
+        <div class="col-sm-12 col-md-6 col-lg-6 col-xl-2 mb-4">
+            <div class="card">
+                <div class="image-container">
+                    {% if 'placeholder' in post.image1.url %}
+                    <img src="{{ defaultImage.url }}" class="card-img-top" alt="Post Image">
+                    {% else %}
+                    <img src="{{ post.image1.url }}" class="card-img-top" alt="Post Image">
+                    {% endif %}
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">{{ post.title }}</h5>
+                    <p class="card-text">{{ post.content }}</p>
+                    <a href="{{ post.url }}" class="btn btn-primary">Read More</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
     </div>
 </div>
-{% endfor %}
+
+
+{% endblock %}
