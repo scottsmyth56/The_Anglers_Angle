@@ -117,7 +117,7 @@ AUTH_PASSWORD_VALIDATORS = [
         'NumericPasswordValidator',
     },
 ]
-
+AUTH_USER_MODEL = 'blog.User'
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
