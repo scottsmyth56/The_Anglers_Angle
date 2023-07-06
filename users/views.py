@@ -31,7 +31,7 @@ def login(request):
         if form.is_valid():
             username = form.cleaned_data.get('username')
             password = form.cleaned_data.get('password')
-            print(f"{username} Password: {password}")
+            print(f"{username} / {password}")
             user = authenticate(username=username, password=password)
             if user is not None:
                 print("user authenticated")

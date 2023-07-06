@@ -26,8 +26,9 @@
                 </div>
                 <div class="col-2">
                     <div class="header-user">
-                        <img src="#" alt="User" class="header-user-img">
-                        <p class="header-user-username">Username</p>
+                        <img src="{{user.profile_picture.url}}" alt="User" class="header-user-img">
+                        <p class="header-user-username">Welcome, {{user.username}}</p>
+                        <a href="{% url 'logout' %}">Logout</a>
                     </div>
                 </div>
             </div>
