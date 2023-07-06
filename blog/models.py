@@ -53,7 +53,7 @@ class Post(models.Model):
     content = models.TextField()
     image1 = CloudinaryField('image', default='placeholder')
     image2 = CloudinaryField('image', default='placeholder')
-    timestamp = models.DateTimeField()
+    timestamp = models.DateTimeField(auto_now_add=True)
     category = models.CharField(max_length=100, null=True, blank=True)
     group = models.ForeignKey(
         Group, on_delete=models.CASCADE, null=True, blank=True)
@@ -70,7 +70,7 @@ class Comment(models.Model):
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
     post_id = models.ForeignKey(Post, on_delete=models.CASCADE)
     comment = models.TextField()
-    timestamp = models.DateTimeField()
+    timestamp = models.DateTimeField(auto_now_add=True)
 
     class Meta:
         ordering = ["-timestamp"]
