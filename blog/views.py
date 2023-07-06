@@ -47,3 +47,13 @@ class editPost(generic.UpdateView):
         form.instance.user_id = self.request.user
         messages.success(self.request, 'Post updated Succesfully')
         return super().form_valid(form)
+
+
+class deletePost(generic.DeleteView):
+    model = Post
+    template_name = 'Posts/delete_post.html'
+    success_url = reverse_lazy('index')
+
+    def delete(self, request, *args, **kwargs):
+        messages.success(request, 'Post Deleted Successfully')
+        return super().delete(request, *args, **kwargs)

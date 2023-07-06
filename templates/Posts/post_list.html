@@ -18,7 +18,7 @@
                     <a href="{{ post.url }}" class="btn btn-primary">Read More</a>
                     {% if post.user_id.username == user.username %}
                     <a href="{% url 'editPost' post.post_id %}" class="btn btn-primary">Edit</a>
-                    <a href="{{ post.url }}" class="btn btn-primary">Delete</a>
+                    <a href="{% url 'deletePost' post.post_id %}" class="btn btn-primary">Delete</a>
                     {% endif %}
 
                 </div>
