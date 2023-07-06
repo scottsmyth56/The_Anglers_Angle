@@ -14,8 +14,13 @@
                 </div>
                 <div class="card-body">
                     <h5 class="card-title">{{ post.title }}</h5>
-                    <p class="card-text">{{ post.content }}</p>
+                    <p class="card-text">{{ post.user_id }}</p>
                     <a href="{{ post.url }}" class="btn btn-primary">Read More</a>
+                    {% if post.user_id.username == user.username %}
+                    <a href="{% url 'editPost' post.post_id %}" class="btn btn-primary">Edit</a>
+                    <a href="{{ post.url }}" class="btn btn-primary">Delete</a>
+                    {% endif %}
+
                 </div>
             </div>
         </div>
