@@ -3,24 +3,47 @@
 <div class="col-12 mt-3">
     <div class="row">
         {% for post in posts %}
-        <div class="col-sm-12 col-md-6 col-lg-6 col-xl-3 mb-4">
-            <div class="card">
-                <div class="image-container">
-                    {% if 'placeholder' in post.image1.url %}
-                    <img src="{{ defaultImage.url }}" class="card-img-top" alt="Post Image" />
-                    {% else %}
-                    <img src="{{ post.image1.url }}" class="card-img-top" alt="Post Image" />
+        <div class="col-sm-12 col-md-6 col-lg-4 col-xl-3 mb-4">
+            <div class="card h-100">
+
+                <div class="card-header d-flex justify-content-between align-items-center">
+
+                    <div>
+                        <img src="{{ post.user_id.profile_picture.url }}" alt="Profile Picture" class="rounded-circle"
+                            style="width: 40px; height: 40px;">
+                        <strong>{{ post.user_id.username }}</strong>
+                    </div>
+
+                    {% if post.user_id.username == user.username %}
+                    <div class="dropdown">
+                        <button class="btn btn-link dropdown-toggle" type="button" id="dropdownMenuButton"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fas fa-ellipsis-v"></i>
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <li><a class="dropdown-item" href="{% url 'editPost' post.post_id %}">Edit</a></li>
+                            <li><a class="dropdown-item" href="{% url 'deletePost' post.post_id %}">Delete</a></li>
+                        </ul>
+                    </div>
                     {% endif %}
                 </div>
-                <div class="card-body">
-                    <h5 class="card-title">{{ post.title }}</h5>
-                    <p class="card-text">{{ post.user_id }}</p>
-                    <a href="{{ post.url }}" class="btn btn-primary">Read More</a>
-                    {% if post.user_id.username == user.username %}
-                    <a href="{% url 'editPost' post.post_id %}" class="btn btn-primary">Edit</a>
-                    <a href="{% url 'deletePost' post.post_id %}" class="btn btn-primary">Delete</a>
-                    {% endif %}
 
+                <div class="card-body">
+                    <img src="{{ post.image1.url }}" class="card-img-top img-fixed" alt="Post Image 1">
+                    <h5 class="card-title">{{ post.title }}</h5>
+                    <p class="card-text">{{ post.content|truncatechars:100 }}</p>
+                </div>
+
+                <div class="card-footer">
+                    <a href="{{ post.url }}" class="btn btn-primary text-center d-block">Read More</a>
+                </div>
+
+                <div class="card-footer d-flex justify-content-between align-items-center">
+                    <div>
+                        <span>Likes: </span>
+                        <span>Comments:</span>
+                    </div>
+                    <small class="text-muted">{{ post.timestamp }}</small>
                 </div>
             </div>
         </div>
