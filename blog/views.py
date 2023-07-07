@@ -57,3 +57,13 @@ class deletePost(generic.DeleteView):
     def delete(self, request, *args, **kwargs):
         messages.success(request, 'Post Deleted Successfully')
         return super().delete(request, *args, **kwargs)
+
+
+class viewPost(generic.DetailView):
+    model = Post
+    template_name = 'Posts/post_detail.html'
+
+    def get_object(self):
+        obj = super().get_object()
+        print(obj.user_id)  # or use logging
+        return obj

@@ -35,7 +35,8 @@
                 </div>
 
                 <div class="card-footer">
-                    <a href="{{ post.url }}" class="btn btn-primary text-center d-block">Read More</a>
+                    <a href="{% url 'viewPost' post.post_id %}" class="btn btn-primary text-center d-block">Read
+                        More</a>
                 </div>
 
                 <div class="card-footer d-flex justify-content-between align-items-center">
