@@ -94,6 +94,8 @@ class Competition(models.Model):
     description = models.CharField(max_length=300)
     category = models.CharField(max_length=150)
     date = models.DateTimeField()
+    creator = models.ForeignKey(User, on_delete=models.CASCADE)
+    featuredImage = CloudinaryField('image', default='placeholder',null=True, blank=True)
 
 
 class CompetitionUser(models.Model):

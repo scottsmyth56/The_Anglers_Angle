@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% if messages %}
+
+{% for message in messages %}
+<div class="alert alert-{{ message.tags }}">
+    {{ message }}
+</div>
+{% endfor %}
+
+{% endif %}
+
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.title }}
+    {{ form.location }}
+    {{ form.description }}
+    {{ form.category }}
+    <label for="{{ form.date.id_for_label }}">Date</label>
+    <input type="datetime-local" id="{{ form.date.id_for_label }}" name="{{ form.date.html_name }}">
+    {{ form.featuredImage }}
+    <input type="submit" value="Submit">
+</form>
+
+{% endblock content%}
