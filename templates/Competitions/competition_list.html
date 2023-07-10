@@ -1,0 +1,29 @@
+{%block content %}
+
+
+<div class="col-12 mt-3">
+    <div class="row">
+        {% for comp in competitions%}
+        <div class="col-sm-12 col-md-6 col-lg-6 col-xl-2 mb-4">
+            <div class="card">
+                <div class="image-container">
+                    {% if 'placeholder' in comp.featuredImage.url %}
+                    <img src="{{ defaultImage.url }}" class="card-img-top" alt="Post Image">
+                    {% else %}
+                    <img src="{{ comp.featuredImage.url }}" class="card-img-top" alt="Post Image">
+                    {% endif %}
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">{{ comp.title }}</h5>
+                    <p class="card-text">{{ comp.description }}</p>
+                    <a href="{{ comp.url }}" class="btn btn-primary">Read More</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+
+
+{% endblock %}

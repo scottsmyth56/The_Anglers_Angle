@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+
+{% if messages %}
+
+{% for message in messages %}
+<div class="alert alert-{{ message.tags }}">
+    {{ message }}
+</div>
+{% endfor %}
+
+{% endif %}
+
+<div class="container-fluid">
+    <div class="container">
+        <a href="{% url 'addCompetition' %}"><button type="button" class="btn btn-primary">Create
+                Competition</button></a>
+    </div>
+    <div class="row">
+
+        {% include 'Competitions/competition_list.html' %}
+
+    </div>
+</div>
+
+
+
+
+{% endblock %}
