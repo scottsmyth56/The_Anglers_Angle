@@ -16,7 +16,8 @@
                 <div class="card-body">
                     <h5 class="card-title">{{ comp.title }}</h5>
                     <p class="card-text">{{ comp.description }}</p>
-                    <a href="{{ comp.url }}" class="btn btn-primary">Read More</a>
+                    <a href="{% url 'viewCompetitionDetailed' comp.competition_id %}" class="btn btn-primary">Read
+                        More</a>
                 </div>
             </div>
         </div>

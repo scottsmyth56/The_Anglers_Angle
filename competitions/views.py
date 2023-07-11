@@ -28,3 +28,9 @@ class addCompetition(generic.CreateView):
         form.instance.creator = self.request.user
         messages.success(self.request, 'Competiton created Succesfully')
         return super().form_valid(form)
+
+
+class viewCompetitionDetailed(generic.DetailView):
+    model = models.Competition
+    template_name = 'Competitions/competition_detail.html'
+

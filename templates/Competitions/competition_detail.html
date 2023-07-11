@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>{{ object.title }}</h1>
+<p>{{ object.content }}</p>
+
+<img src="{{ object.featuredImage.url }}" alt="{{ object.title }}">
+<p>Category: {{ object.category }}</p>
+<p>Title: {{ object.title }}</p>
+<p>description: {{ object.description }}</p>
+<p>date: {{ object.date }}</p>
+<p>location: {{ object.location }}</p>
+{% endblock %}
