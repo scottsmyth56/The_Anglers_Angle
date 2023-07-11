@@ -6,6 +6,7 @@ urlpatterns = [
     path('add-competition/', views.addCompetition.as_view(), name='addCompetition'),
     path('competition/<int:pk>/', views.viewCompetitionDetailed.as_view(),
          name='viewCompetitionDetailed'),
+    path('enterCompetition/<int:pk>/', views.enterCompetition.as_view(), name='enterCompetition')
     # path('edit-post/<int:pk>', views.editPost.as_view(), name='editPost'),
     # path('delete-post/<int:pk>', views.deletePost.as_view(), name='deletePost'),
 
