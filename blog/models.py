@@ -102,5 +102,3 @@ class Competition(models.Model):
 class CompetitionUser(models.Model):
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
     competition_id = models.ForeignKey(Competition, on_delete=models.CASCADE)
-
-

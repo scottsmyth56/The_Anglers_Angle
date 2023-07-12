@@ -2,25 +2,42 @@
 
 {% block content %}
 {% if messages %}
-
 {% for message in messages %}
 <div class="alert alert-{{ message.tags }}">
     {{ message }}
 </div>
 {% endfor %}
-
 {% endif %}
 
 <form method="POST" enctype="multipart/form-data">
     {% csrf_token %}
-    {{ form.title }}
-    {{ form.location }}
-    {{ form.description }}
-    {{ form.category }}
-    <label for="{{ form.date.id_for_label }}">Date</label>
-    <input type="datetime-local" id="{{ form.date.id_for_label }}" name="{{ form.date.html_name }}">
-    {{ form.featuredImage }}
-    <input type="submit" value="Submit">
+    <div class="mb-3">
+        <label for="{{ form.title.id_for_label }}" class="form-label">Title</label>
+        <input type="text" class="form-control" id="{{ form.title.id_for_label }}" name="{{ form.title.name }}">
+    </div>
+    <div class="mb-3">
+        <label for="{{ form.location.id_for_label }}" class="form-label">Location</label>
+        <input type="text" class="form-control" id="{{ form.location.id_for_label }}" name="{{ form.location.name }}">
+    </div>
+    <div class="mb-3">
+        <label for="{{ form.description.id_for_label }}" class="form-label">Description</label>
+        <textarea class="form-control" id="{{ form.description.id_for_label }}"
+            name="{{ form.description.name }}"></textarea>
+    </div>
+    <div class="mb-3">
+        <label for="{{ form.category.id_for_label }}" class="form-label">Category</label>
+        <input type="text" class="form-control" id="{{ form.category.id_for_label }}" name="{{ form.category.name }}">
+    </div>
+    <div class="mb-3">
+        <label for="{{ form.date.id_for_label }}" class="form-label">Date</label>
+        <input type="datetime-local" class="form-control" id="{{ form.date.id_for_label }}" name="{{ form.date.name }}">
+    </div>
+    <div class="mb-3">
+        <label for="{{ form.featuredImage.id_for_label }}" class="form-label">Featured Image</label>
+        <input type="file" class="form-control-file" id="{{ form.featuredImage.id_for_label }}"
+            name="{{ form.featuredImage.name }}">
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
 </form>
 
 {% endblock content%}

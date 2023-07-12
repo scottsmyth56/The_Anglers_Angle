@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'blog',
     'users',
     'competitions',
+    'widget_tweaks',
 ]
 
 MIDDLEWARE = [
