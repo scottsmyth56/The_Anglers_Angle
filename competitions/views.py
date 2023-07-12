@@ -39,6 +39,10 @@ class viewCompetitionDetailed(generic.DetailView):
         context = super().get_context_data(**kwargs)
         context['competition_user'] = models.CompetitionUser.objects.filter(
             competition_id=self.object, user_id=self.request.user)
+
+        context['registered_users'] = models.User.objects.filter(
+            competitionuser__competition_id=self.object)
+
         return context
 
 

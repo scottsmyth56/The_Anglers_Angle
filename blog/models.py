@@ -95,9 +95,12 @@ class Competition(models.Model):
     category = models.CharField(max_length=150)
     date = models.DateTimeField()
     creator = models.ForeignKey(User, on_delete=models.CASCADE)
-    featuredImage = CloudinaryField('image', default='placeholder',null=True, blank=True)
+    featuredImage = CloudinaryField(
+        'image', default='placeholder', null=True, blank=True)
 
 
 class CompetitionUser(models.Model):
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
     competition_id = models.ForeignKey(Competition, on_delete=models.CASCADE)
+
+
