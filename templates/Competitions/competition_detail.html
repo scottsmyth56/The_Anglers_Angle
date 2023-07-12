@@ -15,6 +15,12 @@
     Competition</a>
 {% endif %}
 
+{% if object.creator.username == user.username %}
+<a href="{% url 'editCompetition' object.competition_id %}" class="btn btn-primary text-center d-block">Edit Competition
+    Details</a>
+<a href="{% url 'deleteCompetition' object.competition_id %}" class="btn btn-primary text-center d-block">Remove
+    Competition</a>
+{% endif %}
 <h1>{{ object.title }}</h1>
 <p>{{ object.content }}</p>
 
@@ -24,6 +30,7 @@
 <p>description: {{ object.description }}</p>
 <p>date: {{ object.date }}</p>
 <p>location: {{ object.location }}</p>
+<p>Organiser: {{object.creator}}</p>
 
 
 
