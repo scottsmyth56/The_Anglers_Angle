@@ -6,4 +6,6 @@ urlpatterns = [
     path('add-group/', views.addGroup.as_view(), name='addGroup'),
     path('group/<int:pk>/', views.viewGroup.as_view(),
          name='viewGroup'),
+    path('enterGroup/<int:pk>/',
+         views.enterGroup.as_view(), name='enterGroup'),
 ]

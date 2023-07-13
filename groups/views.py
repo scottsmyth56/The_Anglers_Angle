@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render,get_object_or_404, redirect
 from django.views import generic
 from django.contrib import messages
 from blog.models import Group, UserGroup,Post,User
@@ -54,3 +54,19 @@ class viewGroup(generic.DetailView):
 
         return context
 
+class enterGroup(generic.CreateView):
+    def get(self, request, *args, **kwargs):
+        pk = self.kwargs.get('pk')
+        group = get_object_or_404(Group, pk=pk)
+        if UserGroup.objects.filter(user_id=request.user, group_id=group).exists():
+            UserGroup.objects.filter(
+                user_id=request.user, group_id=group).delete()
+            messages.success(
+                request, 'You have left this group')
+        else:
+            UserGroup.objects.create(
+                user_id=request.user, group_id=group)
+            messages.success(
+                request, 'You have joined this group')
+
+        return redirect('viewGroup', pk=pk)

@@ -15,9 +15,16 @@
 
 <div class="container-fluid">
     <div class="container">
-        <a href="{% url 'addPost' %}"></a><button type="button" class="btn btn-primary">Add Post</button></a>
-        <a href="{% url 'addPost' %}"><button type="button" class="btn btn-primary">View My Posts</button></a>
+        {% if group_user %}
+            <a href="{% url 'enterGroup' object.group_id %}" class="btn btn-primary text-center d-block">Leave Group</a>
+            <a href="{% url 'addPost' %}"></a><button type="button" class="btn btn-primary">Post in Group</button></a>
+            <a href="{% url 'addPost' %}"><button type="button" class="btn btn-primary">View My Posts</button></a>
+        {% else %}
+            <a href="{% url 'enterGroup' object.group_id %}" class="btn btn-primary text-center d-block">Join Group</a>
+          
+        {% endif %}
     </div>
+
     <div class="row">
     {% for post in posts %}
         {% include 'Posts/post_list.html' %}
@@ -25,18 +32,18 @@
         <p>No posts yet.</p>
     {% endfor %}
     </div>
-</div>
 
-<div class="container">
-    <h2>Group Members</h2>
-    <ul>
-    {% for member in group_member %}
-        <li>{{ member.username }}</li>
-    {% empty %}
-        <li>No members yet.</li>
-    {% endfor %}
-    </ul>
-</div>
+
+    <div class="container">
+        <h2>Group Members</h2>
+        <ul>
+        {% for member in group_member %}
+            <li>{{ member.username }}</li>
+        {% empty %}
+            <li>No members yet.</li>
+        {% endfor %}
+        </ul>
+    </div>
 
 
 </div>
