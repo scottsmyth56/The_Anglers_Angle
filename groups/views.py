@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.views import generic
 from django.contrib import messages
-from blog.models import Group, UserGroup
+from blog.models import Group, UserGroup,Post,User
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
 # Create your views here.
@@ -37,4 +37,20 @@ class addGroup(generic.CreateView):
         messages.error(self.request, 'Form validation failed: {}'.format(form.errors))
         return super().form_invalid(form)
 
+
+class viewGroup(generic.DetailView):
+    model = Group
+    template_name = 'Groups/groupIndex.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['group_user'] = UserGroup.objects.filter(
+            group_id=self.object, user_id=self.request.user)
+
+        context['group_member'] = User.objects.filter(
+            usergroup__group_id=self.object)
+
+        context['posts'] = Post.objects.filter(group = self.object )
+
+        return context
 
