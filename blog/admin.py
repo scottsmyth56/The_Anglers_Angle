@@ -40,7 +40,7 @@ class CommentAdmin(SummernoteModelAdmin):
 
 @admin.register(Group)
 class GroupAdmin(SummernoteModelAdmin):
-    list_display = ('group_name', 'description')
+    list_display = ('group_name', 'description','is_approved')
     search_fields = ('group_name',)
 
 

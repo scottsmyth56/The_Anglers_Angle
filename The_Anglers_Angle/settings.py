@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'users',
     'competitions',
     'widget_tweaks',
+    'groups',
 ]
 
 MIDDLEWARE = [

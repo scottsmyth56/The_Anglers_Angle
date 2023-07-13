@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{%block content %}
+
+{% if messages %}
+
+{% for message in messages %}
+<div class="alert alert-{{ message.tags }}">
+    {{ message }}
+</div>
+{% endfor %}
+
+{% endif %}
+
+<div class="container-fluid">
+    <div class="container">
+        <a href="{% url 'addGroup' %}"><button type="button" class="btn btn-primary">Create
+                group</button></a>
+    </div>
+
+
+<div class="col-12 mt-3">
+    <div class="row">
+        {% for group in groups %}
+        <div class="col-sm-12 col-md-6 col-lg-6 col-xl-2 mb-4">
+            <div class="card">
+                <div class="image-container">
+                    {% if 'placeholder' in group.featuredImage.url %}
+                    <img src="{{ defaultImage.url }}" class="card-img-top" alt="Post Image">
+                    {% else %}
+                    <img src="{{ group.featuredImage.url }}" class="card-img-top" alt="Post Image">
+                    {% endif %}
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">{{ group.group_name }}</h5>
+                    <p class="card-text">{{ group.description }}</p>
+                    <a href="#" class="btn btn-primary">View Group</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}

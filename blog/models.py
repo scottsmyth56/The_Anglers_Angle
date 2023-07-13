@@ -44,6 +44,10 @@ class Group(models.Model):
     group_id = models.AutoField(primary_key=True)
     group_name = models.CharField(max_length=100)
     description = models.TextField()
+    featuredImage = CloudinaryField(
+        'image', default='placeholder', null=True, blank=True)
+    is_approved = models.BooleanField(default=False)
+    creator = models.ForeignKey(User, on_delete=models.CASCADE)
 
 
 class Post(models.Model):
