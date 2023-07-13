@@ -30,7 +30,7 @@ class addGroup(generic.CreateView):
     def form_valid(self, form):
         form.instance.creator = self.request.user
         form.instance.is_approved = False
-        messages.success(self.request, 'Your Group creation is pending admin approval')
+        messages.success(self.request, f'Group "{form.instance.group_name}" created successfully, waiting for admin approval')
         return super().form_valid(form)
     
     def form_invalid(self, form):
@@ -62,11 +62,32 @@ class enterGroup(generic.CreateView):
             UserGroup.objects.filter(
                 user_id=request.user, group_id=group).delete()
             messages.success(
-                request, 'You have left this group')
+                request, f'You have left "{group.group_name}" ')
         else:
             UserGroup.objects.create(
                 user_id=request.user, group_id=group)
             messages.success(
-                request, 'You have joined this group')
+                request, f'You have joined "{group.group_name}" Welcome!')
 
         return redirect('viewGroup', pk=pk)
+
+class editGroup(generic.UpdateView):
+    model = Group
+    fields = ['group_name', 'description','featuredImage']
+    template_name = 'Groups/edit_group.html'
+    success_url = reverse_lazy('groups')
+
+    def form_valid(self, form):
+        form.instance.user_id = self.request.user
+        messages.success(self.request, 'Group Details updated Succesfully')
+        return super().form_valid(form)
+
+
+class deleteGroup(generic.DeleteView):
+    model = Group
+    template_name = 'Groups/delete_group.html'
+    success_url = reverse_lazy('groups')
+
+    def delete(self, request, *args, **kwargs):
+        messages.success(request, 'Group Deleted Successfully')
+        return super().delete(request, *args, **kwargs)

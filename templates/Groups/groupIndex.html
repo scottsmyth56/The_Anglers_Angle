@@ -16,13 +16,16 @@
 <div class="container-fluid">
     <div class="container">
         {% if group_user %}
-            <a href="{% url 'enterGroup' object.group_id %}" class="btn btn-primary text-center d-block">Leave Group</a>
+            <a href="{% url 'enterGroup' object.group_id %}" class="btn btn-primary">Leave Group</a>
             <a href="{% url 'addPost' %}"></a><button type="button" class="btn btn-primary">Post in Group</button></a>
-            <a href="{% url 'addPost' %}"><button type="button" class="btn btn-primary">View My Posts</button></a>
+            <a href="{% url 'addPost' %}"><button type="button" class="btn btn-primary">View My Posts</button></a> 
         {% else %}
-            <a href="{% url 'enterGroup' object.group_id %}" class="btn btn-primary text-center d-block">Join Group</a>
-          
+            <a href="{% url 'enterGroup' object.group_id %}" class="btn btn-primary">Join Group</a>
         {% endif %}
+        {% if object.creator.username == user.username %}
+                <a href="{% url 'editGroup' object.group_id %}" class="btn btn-primary">Edit Group Details</a>
+                <a href="{% url 'deleteGroup' object.group_id %}" class="btn btn-primary">Remove Group</a>
+            {% endif %}
     </div>
 
     <div class="row">
