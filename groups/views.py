@@ -2,7 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.views import generic
 from django.contrib import messages
 from blog.models import Group, UserGroup, Post, User
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy,reverse
 from django.contrib.auth.mixins import LoginRequiredMixin
 # Create your views here.
 
@@ -112,3 +112,21 @@ class addGroupPost(generic.CreateView):
         form.save()
         return redirect('viewGroup', pk=group_id)
     #  return super().form_valid(form)
+
+
+class editGroupPost(generic.UpdateView):
+    model = Post
+    fields = ['title', 'content', 'image1', 'image2', 'category']
+    template_name = 'Posts/edit_post.html'
+    # success_url = reverse_lazy('vi')
+
+    def get_object(self, queryset=None):
+        return get_object_or_404(Post, pk=self.kwargs.get('pk'))
+
+    def form_valid(self, form):
+        form.instance.user_id = self.request.user
+        messages.success(self.request, 'Group Post updated Successfully')
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        return reverse('viewGroup', kwargs={'pk': self.object.group.pk})

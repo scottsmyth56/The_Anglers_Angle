@@ -21,8 +21,14 @@
                             <i class="fas fa-ellipsis-v"></i>
                         </button>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            {% if post.group %}
+                            <li><a class="dropdown-item" href="{% url 'editGroupPost' post.post_id %}">Edit</a></li>
+                            <li><a class="dropdown-item" href="{% url 'deleteGroupPost' post.post_id %}">Delete</a>
+                            </li>
+                            {% else %}
                             <li><a class="dropdown-item" href="{% url 'editPost' post.post_id %}">Edit</a></li>
                             <li><a class="dropdown-item" href="{% url 'deletePost' post.post_id %}">Delete</a></li>
+                            {% endif %}
                         </ul>
                     </div>
                     {% endif %}
