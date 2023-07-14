@@ -8,5 +8,4 @@ urlpatterns = [
     path('enterCompetition/<int:pk>/',views.enterCompetition.as_view(), name='enterCompetition'),
     path('edit-competition/<int:pk>', views.editCompetition.as_view(), name='editCompetition'),
     path('delete-competition/<int:pk>', views.deleteCompetition.as_view(), name='deleteCompetition'),
-
 ]

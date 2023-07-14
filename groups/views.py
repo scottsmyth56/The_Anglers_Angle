@@ -1,7 +1,7 @@
-from django.shortcuts import render,get_object_or_404, redirect
+from django.shortcuts import render, get_object_or_404, redirect
 from django.views import generic
 from django.contrib import messages
-from blog.models import Group, UserGroup,Post,User
+from blog.models import Group, UserGroup, Post, User
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
 # Create your views here.
@@ -23,18 +23,20 @@ class viewGroups(generic.ListView, LoginRequiredMixin):
 
 class addGroup(generic.CreateView):
     model = Group
-    fields = ['group_name', 'description','featuredImage']
+    fields = ['group_name', 'description', 'featuredImage']
     template_name = "Groups/add_group.html"
     success_url = reverse_lazy('groups')
 
     def form_valid(self, form):
         form.instance.creator = self.request.user
         form.instance.is_approved = False
-        messages.success(self.request, f'Group "{form.instance.group_name}" created successfully, waiting for admin approval')
+        messages.success(
+            self.request, f'Group "{form.instance.group_name}" created successfully, waiting for admin approval')
         return super().form_valid(form)
-    
+
     def form_invalid(self, form):
-        messages.error(self.request, 'Form validation failed: {}'.format(form.errors))
+        messages.error(
+            self.request, 'Form validation failed: {}'.format(form.errors))
         return super().form_invalid(form)
 
 
@@ -50,9 +52,10 @@ class viewGroup(generic.DetailView):
         context['group_member'] = User.objects.filter(
             usergroup__group_id=self.object)
 
-        context['posts'] = Post.objects.filter(group = self.object )
+        context['posts'] = Post.objects.filter(group=self.object)
 
         return context
+
 
 class enterGroup(generic.CreateView):
     def get(self, request, *args, **kwargs):
@@ -71,9 +74,10 @@ class enterGroup(generic.CreateView):
 
         return redirect('viewGroup', pk=pk)
 
+
 class editGroup(generic.UpdateView):
     model = Group
-    fields = ['group_name', 'description','featuredImage']
+    fields = ['group_name', 'description', 'featuredImage']
     template_name = 'Groups/edit_group.html'
     success_url = reverse_lazy('groups')
 
@@ -91,3 +95,20 @@ class deleteGroup(generic.DeleteView):
     def delete(self, request, *args, **kwargs):
         messages.success(request, 'Group Deleted Successfully')
         return super().delete(request, *args, **kwargs)
+
+
+class addGroupPost(generic.CreateView):
+    model = Post
+    fields = ['title', 'content', 'image1', 'image2', 'category']
+    template_name = "Posts/add_post.html"
+    success_url = reverse_lazy('viewGroup')
+
+    def form_valid(self, form):
+        form.instance.user_id = self.request.user
+        group_id = self.kwargs['pk']
+        group = get_object_or_404(Group, pk=group_id)
+        form.instance.group = group
+        messages.success(self.request, 'Group Post added Succesfully')
+        form.save()
+        return redirect('viewGroup', pk=group_id)
+    #  return super().form_valid(form)

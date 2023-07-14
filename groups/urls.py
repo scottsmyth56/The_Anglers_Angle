@@ -8,5 +8,5 @@ urlpatterns = [
     path('enterGroup/<int:pk>/',views.enterGroup.as_view(), name='enterGroup'),
     path('edit-group/<int:pk>', views.editGroup.as_view(), name='editGroup'),
     path('delete-group/<int:pk>', views.deleteGroup.as_view(), name='deleteGroup'),
-
+    path('add-groupPost/<int:pk>', views.addGroupPost.as_view(), name='addGroupPost'),
 ]
