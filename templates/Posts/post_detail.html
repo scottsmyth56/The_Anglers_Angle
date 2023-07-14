@@ -12,4 +12,57 @@
 
 <a href="{% url 'editPost' object.post_id %}">Edit</a>
 <a href="{% url 'deletePost' object.post_id %}">Delete</a>
+
+<p>Likes: {{ likes }}</p>
+{% if user_has_liked %}
+<form method="POST" action="{% url 'unlikePost' object.post_id %}">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-link"><i class="fas fa-thumbs-down"></i></button>
+</form>
+{% else %}
+<form method="POST" action="{% url 'likePost' object.post_id %}">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-link"><i class="fas fa-thumbs-up"></i></button>
+</form>
+{% endif %}
+
+
+<h2>Comments:</h2>
+{% for comment in comments %}
+<div class="card mb-3">
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <div>
+            <strong>{{ comment.user_id.username }}</strong>
+            <small class="text-muted">{{ comment.timestamp }}</small>
+        </div>
+        {% if comment.user_id == request.user %}
+        <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <a class="dropdown-item" href="#">Delete</a>
+                <a class="dropdown-item" href="#">Delete</a>
+
+            </div>
+        </div>
+        {% endif %}
+    </div>
+    <div class="card-body">
+        <p class="card-text">{{ comment.comment }}</p>
+    </div>
+</div>
+{% empty %}
+<p>No comments yet.</p>
+{% endfor %}
+
+<h2>Add a comment:</h2>
+<form method="POST" action="{% url 'addComment' object.post_id %}">
+    {% csrf_token %}
+    <div class="form-group">
+        <textarea name="comment" class="form-control" required></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
 {% endblock %}

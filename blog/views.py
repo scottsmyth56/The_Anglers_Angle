@@ -1,6 +1,6 @@
-from django.shortcuts import render
-from .models import Post, Comment
-from django.views import generic
+from django.shortcuts import render, get_object_or_404, redirect
+from .models import Post, Comment, Like
+from django.views import generic, View
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
@@ -66,5 +66,34 @@ class viewPost(generic.DetailView):
 
     def get_object(self):
         obj = super().get_object()
-        print(obj.user_id)  # or use logging
+        print(obj.user_id)
         return obj
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        post = self.object
+        context['comments'] = Comment.objects.filter(post_id=post)
+        context['likes'] = Like.objects.filter(post_id=post).count()
+        context['user_has_liked'] = Like.objects.filter(
+            post_id=post, user_id=self.request.user).exists()
+        return context
+
+
+class likePost(View):
+    def post(self, request, pk):
+        post = get_object_or_404(Post, pk=pk)
+        Like.objects.create(user_id=request.user, post_id=post)
+        return redirect('viewPost', pk=post.pk)
+
+class unlikePost(View):
+    def post(self, request, pk):
+        post = get_object_or_404(Post, pk=pk)
+        Like.objects.filter(user_id=request.user, post_id=post).delete()
+        return redirect('viewPost', pk=post.pk)
+
+class addComment(View):
+    def post(self, request, pk):
+        post = get_object_or_404(Post, pk=pk)
+        Comment.objects.create(user_id=request.user,
+                               post_id=post, comment=request.POST['comment'])
+        return redirect('viewPost', pk=post.pk)
