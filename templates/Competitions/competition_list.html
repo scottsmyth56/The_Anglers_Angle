@@ -1,3 +1,4 @@
+{% load static %}
 {%block content %}
 
 
@@ -8,7 +9,7 @@
             <div class="card">
                 <div class="image-container">
                     {% if 'placeholder' in comp.featuredImage.url %}
-                    <img src="{{ defaultImage.url }}" class="card-img-top" alt="Post Image">
+                    <img src="{% static 'images/aa-logo.png' %}" class="card-img-top" alt="Post Image">
                     {% else %}
                     <img src="{{ comp.featuredImage.url }}" class="card-img-top" alt="Post Image">
                     {% endif %}

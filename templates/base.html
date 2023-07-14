@@ -20,14 +20,19 @@
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-2">
-                    <img src="#" alt="Logo" class="header-logo">
+                    <img src="{% static 'images/aa-logo.png' %}" alt="Logo" class="header-logo">
                 </div>
                 <div class="col-8">
                     <h1 class="header-title">The Anglers Angle</h1>
                 </div>
                 <div class="col-2">
                     <div class="header-user">
+                        {% if "placeholder" in user.profile_picture.url %}
+                        <img src="{% static 'images/placeholder-profile.png' %}" alt="User" width="60px"
+                            class="header-user-img">
+                        {% else %}
                         <img src="{{user.profile_picture.url}}" alt="User" class="header-user-img">
+                        {% endif %}
                         <p class="header-user-username">Welcome, {{user.username}}</p>
                         <a href="{% url 'logout' %}">Logout</a>
                     </div>

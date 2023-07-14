@@ -12,6 +12,7 @@ urlpatterns = [
          views.addGroupPost.as_view(), name='addGroupPost'),
     path('edit-groupPost/<int:pk>',
          views.editGroupPost.as_view(), name='editGroupPost'),
+    path('delete-groupPost/<int:pk>', views.deleteGroupPost.as_view(), name='deleteGroupPost'),
 
 
 ]

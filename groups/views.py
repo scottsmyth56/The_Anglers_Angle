@@ -2,7 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.views import generic
 from django.contrib import messages
 from blog.models import Group, UserGroup, Post, User
-from django.urls import reverse_lazy,reverse
+from django.urls import reverse_lazy, reverse
 from django.contrib.auth.mixins import LoginRequiredMixin
 # Create your views here.
 
@@ -130,3 +130,16 @@ class editGroupPost(generic.UpdateView):
 
     def get_success_url(self):
         return reverse('viewGroup', kwargs={'pk': self.object.group.pk})
+
+
+class deleteGroupPost(generic.DeleteView):
+    model = Post
+    template_name = 'Posts/delete_post.html'
+
+    def delete(self, request, *args, **kwargs):
+        messages.success(request, 'Post Deleted Successfully')
+        return super().delete(request, *args, **kwargs)
+
+    def get_success_url(self):
+        group_id = self.object.group.pk
+        return reverse('viewGroup', kwargs={'pk': group_id})
