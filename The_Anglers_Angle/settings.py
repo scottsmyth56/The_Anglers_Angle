@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 
 from pathlib import Path
 import os
+from sendgrid import SendGridAPIClient
+from sendgrid.helpers.mail import Mail
 import dj_database_url
 if os.path.isfile('env.py'):
     import env
@@ -123,6 +125,18 @@ AUTH_PASSWORD_VALIDATORS = [
 AUTH_USER_MODEL = 'blog.User'
 LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'index'
+
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_HOST = 'smtp.gmail.com'
+# EMAIL_PORT = 587
+# EMAIL_USE_TLS = True
+# EMAIL_HOST_USER = os.environ.get("EMAIL_HOST")
+# EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_PASSWORD")
+# DEFAULT_FROM_EMAIL = 'theanglerangler@gmail.com'
+# EMAIL_BACKEND = 'sendgrid_backend.SendgridBackend'
+# SENDGRID_API_KEY = os.getenv('SENDGRID_API_KEY')
+# SENDGRID_SANDBOX_MODE_IN_DEBUG = False
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/

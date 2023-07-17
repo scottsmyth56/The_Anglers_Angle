@@ -4,6 +4,9 @@ from django.contrib.auth import login as auth_login, authenticate, logout
 from .forms import RegistrationForm, LoginForm, EditUserForm
 from blog.models import User
 from django.contrib.auth.decorators import login_required
+from sendgrid import SendGridAPIClient
+from sendgrid.helpers.mail import Mail
+import os
 
 
 def register(request):
@@ -38,7 +41,7 @@ def login(request):
             if user is not None:
                 print("user authenticated")
                 auth_login(request, user)
-                return redirect('post-list')
+                return redirect('index')
             else:
                 print("user not authenticated")
     else:
