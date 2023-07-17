@@ -10,7 +10,7 @@ class RegistrationForm(forms.ModelForm):
 
     class Meta(UserCreationForm.Meta):
         model = User
-        fields = ('first_name', 'last_name',
+        fields = ('first_name', 'last_name',  'email',
                   'username', 'password', 'password2')
 
     def check_password(self):
@@ -36,4 +36,6 @@ class LoginForm(forms.Form):
 class EditUserForm(forms.ModelForm):
     class Meta:
         model = User
-        fields = ['first_name', 'last_name', 'username', 'profile_picture']
+        fields = ['first_name', 'last_name',
+                  
+                  'email', 'username', 'profile_picture']
