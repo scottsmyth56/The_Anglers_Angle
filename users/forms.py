@@ -1,5 +1,5 @@
 from django import forms
-from blog import models
+from blog.models import User
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 
 
@@ -9,7 +9,7 @@ class RegistrationForm(forms.ModelForm):
         widget=forms.PasswordInput, label='Confirm Password')
 
     class Meta(UserCreationForm.Meta):
-        model = models.User
+        model = User
         fields = ('first_name', 'last_name',
                   'username', 'password', 'password2')
 
@@ -31,3 +31,9 @@ class RegistrationForm(forms.ModelForm):
 class LoginForm(forms.Form):
     username = forms.CharField()
     password = forms.CharField(widget=forms.PasswordInput)
+
+
+class EditUserForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ['first_name', 'last_name', 'username', 'profile_picture']
