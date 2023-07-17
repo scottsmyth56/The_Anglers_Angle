@@ -1,7 +1,8 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth import login as auth_login, authenticate, logout
 from .forms import RegistrationForm, LoginForm, EditUserForm
+from blog.models import User
 
 
 def register(request):
@@ -51,9 +52,15 @@ def edit_profile(request):
         if form.is_valid():
             form.save()
             messages.success(request, 'Your profile was successfully updated!')
-            return redirect('index')
+            return redirect('profile', username=request.user.username)
         else:
             messages.error(request, 'Please correct the error below.')
     else:
         form = EditUserForm(instance=request.user)
     return render(request, 'Auth/edit_profile.html', {'form': form})
+
+
+def view_profile(request, username):
+    user = get_object_or_404(User, username=username)
+    context = {'user': user}
+    return render(request, 'Auth/profile.html', context)
