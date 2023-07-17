@@ -17,7 +17,7 @@ class RegistrationForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['first_name'].widget.attrs.update(
-            {'class': 'form-control'})
+            {'class': 'form-input'})
         self.fields['last_name'].widget.attrs.update({'class': 'form-input'})
         self.fields['email'].widget.attrs.update({'class': 'form-input'})
         self.fields['username'].widget.attrs.update({'class': 'form-input'})

@@ -16,11 +16,11 @@
     <style>
         body {
             background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.9)),
-            url("{% static 'images/login-background.jpg' %}") no-repeat center center fixed;
+            url("{% static 'images/login-background.jpg' %}") no-repeat center center;
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
-            height: 100vh;
+            height: 100%;
 
         }
     </style>
@@ -35,13 +35,38 @@
         <div class="container-login">
             <div class="row justify-content-center mt-5">
                 <div class="col-md-6">
-                    <h2 class="text-center">Registration</h2>
+                    <h2 class="text-center form-header">Registration</h2>
                     <form method="post">
                         {% csrf_token %}
-                        {{ form.as_p }}
+                        <div class="form-group">
+                            <label for="{{ form.first_name.id_for_label }}" class="form-label">First Name:</label>
+                            {{ form.first_name }}
+                        </div>
+                        <div class="form-group">
+                            <label for="{{ form.last_name.id_for_label }}" class="form-label">Last Name:</label>
+                            {{ form.last_name }}
+                        </div>
+                        <div class="form-group">
+                            <label for="{{ form.email.id_for_label }}" class="form-label">Email:</label>
+                            {{ form.email }}
+                        </div>
+                        <div class="form-group">
+                            <label for="{{ form.username.id_for_label }}" class="form-label">Username:</label>
+                            {{ form.username }}
+                        </div>
+                        <div class="form-group">
+                            <label for="{{ form.password.id_for_label }}" class="form-label">Password:</label>
+                            {{ form.password }}
+                        </div>
+                        <div class="form-group">
+                            <label for="{{ form.password2.id_for_label }}" class="form-label">Confirm Password:</label>
+                            {{ form.password2 }}
+                        </div>
                         <button type="submit" class="btn btn-primary">Register</button>
                     </form>
-                    <p class="text-center mt-3">Already have an account? <a href="{% url 'login' %}">Login</a></p>
+                    <p class="text-center mt-3 form-info">Already have an account? <a href="{% url 'login' %}">Login</a>
+                    </p>
+
                 </div>
             </div>
         </div>
