@@ -7,7 +7,7 @@ from django.urls import reverse_lazy
 from django.http import HttpResponseRedirect
 
 
-class viewCompetitions(generic.ListView, LoginRequiredMixin):
+class viewCompetitions(LoginRequiredMixin, generic.ListView):
     model = Competition
     template_name = "Competitions/competitions.html"
     context_object_name = 'competitions'
@@ -18,7 +18,7 @@ class viewCompetitions(generic.ListView, LoginRequiredMixin):
         return context
 
 
-class addCompetition(generic.CreateView):
+class addCompetition(LoginRequiredMixin, generic.CreateView):
     model = Competition
     fields = ['title', 'location', 'description',
               'category', 'date', 'featuredImage']
@@ -31,7 +31,7 @@ class addCompetition(generic.CreateView):
         return super().form_valid(form)
 
 
-class viewCompetitionDetailed(generic.DetailView):
+class viewCompetitionDetailed(LoginRequiredMixin, generic.DetailView):
     model = Competition
     template_name = 'Competitions/competition_detail.html'
 
@@ -46,7 +46,7 @@ class viewCompetitionDetailed(generic.DetailView):
         return context
 
 
-class enterCompetition(generic.CreateView):
+class enterCompetition(LoginRequiredMixin, generic.CreateView):
     def get(self, request, *args, **kwargs):
         pk = self.kwargs.get('pk')
         competition = get_object_or_404(Competition, pk=pk)
@@ -64,7 +64,7 @@ class enterCompetition(generic.CreateView):
         return redirect('viewCompetitionDetailed', pk=pk)
 
 
-class editCompetition(generic.UpdateView):
+class editCompetition(LoginRequiredMixin, generic.UpdateView):
     model = Competition
     fields = ['title', 'location', 'description',
               'category', 'date', 'featuredImage']
@@ -77,7 +77,7 @@ class editCompetition(generic.UpdateView):
         return super().form_valid(form)
 
 
-class deleteCompetition(generic.DeleteView):
+class deleteCompetition(LoginRequiredMixin, generic.DeleteView):
     model = Competition
     template_name = 'Competitions/delete_competition.html'
     success_url = reverse_lazy('competitions')

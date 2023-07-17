@@ -4,9 +4,10 @@ from django.views import generic, View
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
+from django.contrib.auth.decorators import login_required
 
 
-class index(generic.ListView, LoginRequiredMixin):
+class index(LoginRequiredMixin, generic.ListView):
     model = Post
     queryset = Post.objects.order_by('timestamp')
     template_name = "index.html"
@@ -19,14 +20,14 @@ class index(generic.ListView, LoginRequiredMixin):
         return context
 
 
-class PostList(generic.ListView):
+class PostList(LoginRequiredMixin, generic.ListView):
     model = Post
     queryset = Post.objects.order_by('timestamp')
     template_name = "index.html"
     context_object_name = 'posts'
 
 
-class addPost(generic.CreateView):
+class addPost(LoginRequiredMixin, generic.CreateView, ):
     model = Post
     fields = ['title', 'content', 'image1', 'image2', 'category']
     template_name = "Posts/add_post.html"
@@ -38,7 +39,7 @@ class addPost(generic.CreateView):
         return super().form_valid(form)
 
 
-class editPost(generic.UpdateView):
+class editPost(LoginRequiredMixin, generic.UpdateView, ):
     model = Post
     fields = ['title', 'content', 'image1', 'image2', 'category']
     template_name = 'Posts/edit_post.html'
@@ -50,7 +51,7 @@ class editPost(generic.UpdateView):
         return super().form_valid(form)
 
 
-class deletePost(generic.DeleteView):
+class deletePost(LoginRequiredMixin, generic.DeleteView, ):
     model = Post
     template_name = 'Posts/delete_post.html'
     success_url = reverse_lazy('index')
@@ -60,7 +61,7 @@ class deletePost(generic.DeleteView):
         return super().delete(request, *args, **kwargs)
 
 
-class viewPost(generic.DetailView):
+class viewPost(LoginRequiredMixin, generic.DetailView, ):
     model = Post
     template_name = 'Posts/post_detail.html'
 
@@ -79,19 +80,21 @@ class viewPost(generic.DetailView):
         return context
 
 
-class likePost(View):
+class likePost(LoginRequiredMixin, View):
     def post(self, request, pk):
         post = get_object_or_404(Post, pk=pk)
         Like.objects.create(user_id=request.user, post_id=post)
         return redirect('viewPost', pk=post.pk)
 
-class unlikePost(View):
+
+class unlikePost(LoginRequiredMixin, View):
     def post(self, request, pk):
         post = get_object_or_404(Post, pk=pk)
         Like.objects.filter(user_id=request.user, post_id=post).delete()
         return redirect('viewPost', pk=post.pk)
 
-class addComment(View):
+
+class addComment(LoginRequiredMixin, View):
     def post(self, request, pk):
         post = get_object_or_404(Post, pk=pk)
         Comment.objects.create(user_id=request.user,

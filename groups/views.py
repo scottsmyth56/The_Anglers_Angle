@@ -7,7 +7,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 # Create your views here.
 
 
-class viewGroups(generic.ListView, LoginRequiredMixin):
+class viewGroups(LoginRequiredMixin, generic.ListView):
     model = Group
     template_name = "Groups/groups.html"
     context_object_name = 'groups'
@@ -21,7 +21,7 @@ class viewGroups(generic.ListView, LoginRequiredMixin):
         return context
 
 
-class addGroup(generic.CreateView):
+class addGroup(LoginRequiredMixin, generic.CreateView):
     model = Group
     fields = ['group_name', 'description', 'featuredImage']
     template_name = "Groups/add_group.html"
@@ -40,7 +40,7 @@ class addGroup(generic.CreateView):
         return super().form_invalid(form)
 
 
-class viewGroup(generic.DetailView):
+class viewGroup(LoginRequiredMixin, generic.DetailView):
     model = Group
     template_name = 'Groups/groupIndex.html'
 
@@ -57,7 +57,7 @@ class viewGroup(generic.DetailView):
         return context
 
 
-class enterGroup(generic.CreateView):
+class enterGroup(LoginRequiredMixin, generic.CreateView):
     def get(self, request, *args, **kwargs):
         pk = self.kwargs.get('pk')
         group = get_object_or_404(Group, pk=pk)
@@ -75,7 +75,7 @@ class enterGroup(generic.CreateView):
         return redirect('viewGroup', pk=pk)
 
 
-class editGroup(generic.UpdateView):
+class editGroup(LoginRequiredMixin, generic.UpdateView):
     model = Group
     fields = ['group_name', 'description', 'featuredImage']
     template_name = 'Groups/edit_group.html'
@@ -87,7 +87,7 @@ class editGroup(generic.UpdateView):
         return super().form_valid(form)
 
 
-class deleteGroup(generic.DeleteView):
+class deleteGroup(LoginRequiredMixin, generic.DeleteView):
     model = Group
     template_name = 'Groups/delete_group.html'
     success_url = reverse_lazy('groups')
@@ -97,7 +97,7 @@ class deleteGroup(generic.DeleteView):
         return super().delete(request, *args, **kwargs)
 
 
-class addGroupPost(generic.CreateView):
+class addGroupPost(LoginRequiredMixin, generic.CreateView):
     model = Post
     fields = ['title', 'content', 'image1', 'image2', 'category']
     template_name = "Posts/add_post.html"
@@ -114,7 +114,7 @@ class addGroupPost(generic.CreateView):
     #  return super().form_valid(form)
 
 
-class editGroupPost(generic.UpdateView):
+class editGroupPost(LoginRequiredMixin, generic.UpdateView):
     model = Post
     fields = ['title', 'content', 'image1', 'image2', 'category']
     template_name = 'Posts/edit_post.html'
@@ -132,7 +132,7 @@ class editGroupPost(generic.UpdateView):
         return reverse('viewGroup', kwargs={'pk': self.object.group.pk})
 
 
-class deleteGroupPost(generic.DeleteView):
+class deleteGroupPost(LoginRequiredMixin, generic.DeleteView):
     model = Post
     template_name = 'Posts/delete_post.html'
 

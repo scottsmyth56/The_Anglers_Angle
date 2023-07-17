@@ -3,6 +3,7 @@ from django.contrib import messages
 from django.contrib.auth import login as auth_login, authenticate, logout
 from .forms import RegistrationForm, LoginForm, EditUserForm
 from blog.models import User
+from django.contrib.auth.decorators import login_required
 
 
 def register(request):
@@ -46,6 +47,7 @@ def login(request):
     return render(request, 'Auth/login_user.html', {'form': form})
 
 
+@login_required
 def edit_profile(request):
     if request.method == 'POST':
         form = EditUserForm(request.POST, request.FILES, instance=request.user)
@@ -60,6 +62,7 @@ def edit_profile(request):
     return render(request, 'Auth/edit_profile.html', {'form': form})
 
 
+@login_required
 def view_profile(request, username):
     user = get_object_or_404(User, username=username)
     context = {'user': user}
