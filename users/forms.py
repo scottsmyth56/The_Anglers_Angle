@@ -5,9 +5,9 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 
 class RegistrationForm(forms.ModelForm):
     password = forms.CharField(
-        widget=forms.PasswordInput(attrs={'class': 'form-input'}))
+        widget=forms.PasswordInput(attrs={'class': 'form-input form-control'}))
     password2 = forms.CharField(
-        widget=forms.PasswordInput(attrs={'class': 'form-input'}), label='Confirm Password')
+        widget=forms.PasswordInput(attrs={'class': 'form-input form-control'}), label='Confirm Password')
 
     class Meta(UserCreationForm.Meta):
         model = User
@@ -17,10 +17,13 @@ class RegistrationForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['first_name'].widget.attrs.update(
-            {'class': 'form-input'})
-        self.fields['last_name'].widget.attrs.update({'class': 'form-input'})
-        self.fields['email'].widget.attrs.update({'class': 'form-input'})
-        self.fields['username'].widget.attrs.update({'class': 'form-input'})
+            {'class': 'form-input form-control'})
+        self.fields['last_name'].widget.attrs.update(
+            {'class': 'form-input form-control'})
+        self.fields['email'].widget.attrs.update(
+            {'class': 'form-input form-control'})
+        self.fields['username'].widget.attrs.update(
+            {'class': 'form-input form-control'})
 
     def check_password(self):
         password1 = self.cleaned_data.get('password')
@@ -39,9 +42,9 @@ class RegistrationForm(forms.ModelForm):
 
 class LoginForm(forms.Form):
     username = forms.CharField(
-        widget=forms.TextInput(attrs={'class': 'form-input'}))
+        widget=forms.TextInput(attrs={'class': 'form-input form-control'}))
     password = forms.CharField(
-        widget=forms.PasswordInput(attrs={'class': 'form-input'}))
+        widget=forms.PasswordInput(attrs={'class': 'form-input form-control'}))
 
 
 class EditUserForm(forms.ModelForm):

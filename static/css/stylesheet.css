@@ -171,14 +171,53 @@
     background: none;
 }
 
-.card-header {
-    background-color: #0074D9;
-}
-
 .card-body {
     padding: 0px
 }
 
 .text-muted {
     color: white !important;
+}
+
+.action-header {
+    color: white;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.post-body {
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+        url("../images/addPost-bck.webp") no-repeat center center;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    padding: 20px;
+}
+
+.form-outer {
+    background: none;
+    border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.6) 0px 19px 38px, rgba(0, 0, 0, 1.22) 0px 15px 12px;
+}
+
+.form-label {
+    font-weight: bold;
+    color: white;
+}
+
+.form-input:focus {
+    color: white;
+}
+
+.outer-nav {
+    padding: 0px;
+    color: white;
+}
+
+.nav-style {
+    background: rgba(0, 0, 0, 0.81);
+    box-shadow: rgba(0, 0, 0, 0.6) 0px 19px 38px, rgba(0, 0, 0, 1.22) 0px 15px 12px;
+}
+
+.nav-link {
+    color: white;
 }
