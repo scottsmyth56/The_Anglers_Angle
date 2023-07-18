@@ -13,10 +13,10 @@
 
 {% endif %}
 
-<div class="container-fluid">
-    <div class="container">
-        <a href="{% url 'addPost' %}"></a><button type="button" class="btn btn-primary">Add Post</button></a>
-        <a href="{% url 'addPost' %}"><button type="button" class="btn btn-primary">View My Posts</button></a>
+<div class="container-fluid index-body">
+    <div class="container upload-btn-container text-center">
+        <a href="{% url 'addPost' %}"></a><button type="button" class="btn btn-primary"> Upload Post
+            <i class="fa-solid fa-upload"></i></button></a>
     </div>
     <div class="row">
 
@@ -24,10 +24,6 @@
 
 
     </div>
-
-
-
-
 </div>
 
 
