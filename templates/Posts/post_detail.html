@@ -1,69 +1,93 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1>{{ object.title }}</h1>
-<p>{{ object.content }}</p>
+<div class="container-fluid text-center post-container">
+    <div class="wrapper-shadow">
+    <div class="row post-body-container">
+        <div class="col-md-8 mx-auto">
+            <h1 class="post-title">{{ object.title }}</h1>
+            
 
-<img src="{{ object.image1.url }}" alt="{{ object.title }}">
-<img src="{{ object.image2.url }}" alt="{{ object.title }}">
-<p>Category: "{{ object.category }}"</p>
+            <div class="row ">
+                {% if "placeholder" not in object.image1.url and "placeholder" in object.image2.url %}
+                <div class="col-md-12">
+                    <img src="{{ object.image1.url }}" alt="{{ object.title }}" class="img-fluid rounded mx-auto d-block  post-image">
+                </div>
+                {% elif "placeholder" not in object.image2.url and "placeholder" in object.image1.url %}
+                <div class="col-md-12">
+                    <img src="{{ object.image2.url }}" alt="{{ object.title }}" class="img-fluid rounded mx-auto d-block  post-image">
+                </div>
+                {% elif "placeholder" not in object.image1.url and "placeholder" not in object.image2.url %}
+                <div class="col-md-6">
+                    <img src="{{ object.image1.url }}" alt="{{ object.title }}" class="img-fluid rounded mx-auto d-block  post-image">
+                </div>
+                <div class="col-md-6">
+                    <img src="{{ object.image2.url }}" alt="{{ object.title }}" class="img-fluid rounded mx-auto d-block post-image">
+                </div>
+                {% endif %}
+            </div>
 
+            <p class="post-content">{{ object.content }}</p>
+            {% if object.user_id.username == user.username %}
+                <a href="{% url 'editPost' object.post_id %}" class="btn btn-primary">Edit</a>
+                <a href="{% url 'deletePost' object.post_id %}" class="btn btn-danger">Delete</a>
+            {% endif %}
+            <p class="mt-3">Likes: {{ likes }}</p>
+            {% if user_has_liked %}
+            <form method="POST" action="{% url 'unlikePost' object.post_id %}" class="d-inline-block">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-outline-danger"><i class="fas fa-thumbs-down"></i></button>
+            </form>
+            {% else %}
+            <form method="POST" action="{% url 'likePost' object.post_id %}" class="d-inline-block">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-outline-primary"><i class="fas fa-thumbs-up"></i></button>
+            </form>
+            {% endif %}
 
-
-<a href="{% url 'editPost' object.post_id %}">Edit</a>
-<a href="{% url 'deletePost' object.post_id %}">Delete</a>
-
-<p>Likes: {{ likes }}</p>
-{% if user_has_liked %}
-<form method="POST" action="{% url 'unlikePost' object.post_id %}">
-    {% csrf_token %}
-    <button type="submit" class="btn btn-link"><i class="fas fa-thumbs-down"></i></button>
-</form>
-{% else %}
-<form method="POST" action="{% url 'likePost' object.post_id %}">
-    {% csrf_token %}
-    <button type="submit" class="btn btn-link"><i class="fas fa-thumbs-up"></i></button>
-</form>
-{% endif %}
-
-
-<h2>Comments: ({{ comments|length }})</h2>
-{% for comment in comments %}
-<div class="card mb-3">
-    <div class="card-header d-flex justify-content-between align-items-center">
-        <div>
-            <strong>{{ comment.user_id.username }}</strong>
-            <small class="text-muted">{{ comment.timestamp }}</small>
-        </div>
-        {% if comment.user_id.username == user.username %}
+            <h2 class="mt-3">Comments ({{ comments|length }})</h2>
+            {% for comment in comments %}
+            <div class="card mb-3 mx-auto comment-card" style="max-width: 500px;">
+                <div class="card-header d-flex justify-content-between align-items-center comment-card-header">
+                    <div>
+                        <strong>{{ comment.user_id.username }}</strong>
+                        <small class="text-muted">{{ comment.timestamp }}</small>
+                    </div>
+                    {% if comment.user_id.username == user.username %}
                     <div class="dropdown">
                         <button class="btn btn-link dropdown-toggle" type="button" id="dropdownMenuButton"
                             data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="fas fa-ellipsis-v"></i>
+                            <i class="fas fa-ellipsis-v" style="color:white;"></i>
                         </button>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                             <li><a class="dropdown-item" href="{% url 'editComment' comment.comment_id %}">Edit</a></li>
                             <li><a class="dropdown-item" href="{% url 'deleteComment' comment.comment_id %}">Delete</a></li>
-                       
                         </ul>
                     </div>
-        {% endif %}
+                    {% endif %}
+                </div>
+                <div class="card-body comment-card-body">
+                    <p class="card-text">{{ comment.comment }}</p>
+                </div>
+            </div>
+            {% empty %}
+            <p>No comments yet.</p>
+            {% endfor %}
+        </div>
     </div>
-    <div class="card-body">
-        <p class="card-text">{{ comment.comment }}</p>
+
+    <div class="row post-body-container">
+        <div class="col-md-8 mx-auto">
+            <h2>Add a comment:</h2>
+            <form method="POST" action="{% url 'addComment' object.post_id %}">
+                {% csrf_token %}
+                <div class="form-group">
+                    <textarea name="comment" class="form-control form-input" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary mt-2 post-button">Post Comment</button>
+            </form>
+        </div>
     </div>
 </div>
-{% empty %}
-<p>No comments yet.</p>
-{% endfor %}
-
-<h2>Add a comment:</h2>
-<form method="POST" action="{% url 'addComment' object.post_id %}">
-    {% csrf_token %}
-    <div class="form-group">
-        <textarea name="comment" class="form-control" required></textarea>
-    </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
-</form>
-
+</div>
 {% endblock %}

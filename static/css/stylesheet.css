@@ -175,7 +175,7 @@
     padding: 0px
 }
 
-.text-muted {
+.timestamp {
     color: white !important;
 }
 
@@ -237,4 +237,44 @@
 .confirmation-p{
     color: white;
     font-weight: bold;
+}
+.post-container{
+    padding: 20px;
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+        url("../images/addPost-bck.webp") no-repeat center center;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    padding: 20px;
+}
+.post-title{
+    margin-bottom: 20px;
+}
+.wrapper-shadow{
+    background: rgba(0, 0, 0, 0.5);
+    box-shadow: rgba(0, 0, 0, 0.6) 0px 19px 38px, rgba(0, 0, 0, 1.22) 0px 15px 12px;
+    color: white;
+    border-radius: 10px;
+}
+
+.post-image{
+  height: 300px;
+  box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
+}
+.post-content{
+    margin-top: 15px;
+    font-size: 20px;
+}
+.post-button{
+    margin-bottom: 15px;
+    margin-top: 15px;
+}
+.comment-card{
+    max-width: 700px !important;
+}
+.comment-card-body{
+    padding: 10px;
+}
+.comment-card-header{
+    background-color: #0074D9 ;
 }

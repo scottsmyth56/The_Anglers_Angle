@@ -107,6 +107,7 @@ class editComment(LoginRequiredMixin, generic.UpdateView):
     template_name = 'Posts/edit_comment.html'
 
     def get_success_url(self):
+        messages.success(self.request, 'Comment updated Succesfully')
         return reverse_lazy('viewPost', kwargs={'pk': self.object.post_id.pk})
     
 class deleteComment(LoginRequiredMixin, generic.DeleteView):
@@ -114,4 +115,5 @@ class deleteComment(LoginRequiredMixin, generic.DeleteView):
     template_name = 'Posts/delete_comment.html'
 
     def get_success_url(self):
+        messages.success(self.request, 'Comment Deleted Succesfully')
         return reverse_lazy('viewPost', kwargs={'pk': self.object.post_id.pk})
