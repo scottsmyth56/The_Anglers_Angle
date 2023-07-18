@@ -237,6 +237,7 @@
 .confirmation-p{
     color: white;
     font-weight: bold;
+
 }
 .post-container{
     padding: 20px;
@@ -286,4 +287,24 @@
     background-position: center;
     background-repeat: no-repeat;
     padding: 20px;
+}
+.group-index-container{
+    padding: 20px;
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+        url("../images/group-bck.webp") no-repeat center center;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    padding: 20px;
+}
+.description-text-white{
+    color: white;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+    font-size: 15px;
+}
+.member-table{
+    background-color: #0074D9;
+    color: white;
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
 }

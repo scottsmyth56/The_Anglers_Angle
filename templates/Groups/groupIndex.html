@@ -13,40 +13,56 @@
 
 {% endif %}
 
-<div class="container-fluid">
-    <div class="container">
-        {% if group_user %}
-        <a href="{% url 'enterGroup' object.group_id %}" class="btn btn-primary">Leave Group</a>
-        <a href="{% url 'addGroupPost' object.group_id %}"><button type="button" class="btn btn-primary">Post in
-                Group</button></a>
-        {% else %}
-        <a href="{% url 'enterGroup' object.group_id %}" class="btn btn-primary">Join Group</a>
-        {% endif %}
-        {% if object.creator.username == user.username %}
-        <a href="{% url 'editGroup' object.group_id %}" class="btn btn-primary">Edit Group Details</a>
-        <a href="{% url 'deleteGroup' object.group_id %}" class="btn btn-primary">Remove Group</a>
-        {% endif %}
-    </div>
-
+<div class="container-fluid group-index-container">
     <div class="row">
-        {% include 'Posts/post_list.html' %}
+    
+        <div class="col-md-8">
+            <div class="d-flex justify-content-start">
+              
+                <div class="dropdown">
+                    <button class="btn btn-primary dropdown-toggle mr-2" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                        Actions
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        {% if group_user %}
+                        <li><a class="dropdown-item" href="{% url 'enterGroup' object.group_id %}">Leave Group</a></li>
+                        {% else %}
+                        <li><a class="dropdown-item" href="{% url 'enterGroup' object.group_id %}">Join Group</a></li>
+                        {% endif %}
+                        {% if object.creator.username == user.username %}
+                        <li><a class="dropdown-item" href="{% url 'editGroup' object.group_id %}">Edit Group Details</a></li>
+                        <li><a class="dropdown-item" href="{% url 'deleteGroup' object.group_id %}">Remove Group</a></li>
+                        {% endif %}
+                    </ul>
+                </div>
 
+               
+                {% if group_user %}
+                <a class="btn btn-primary" style="margin-left:5px" href="{% url 'addGroupPost' object.group_id %}">Post in Group</a>
+                {% endif %}
+            </div>
+
+            <h2 class="action-header" style="margin-top:10px">{{ object.group_name }}</h2>
+            <p class="description-text-white">{{ object.description }}</p>
+
+            <h3 class="action-header">Posts in Group</h3>
+            {% include 'Posts/post_list.html' %}
+        </div>
+
+       
+        <div class="col-md-4">
+            <h3 class="action-header">Group Members</h3>
+            <ul class="list-group">
+                {% for member in group_member %}
+                <li class="list-group-item border rounded member-table">{{ member.username }}</li>
+                {% empty %}
+                <li class="list-group-item border rounded">No members yet.</li>
+                {% endfor %}
+            </ul>
+        </div>
     </div>
-
-
-    <div class="container">
-        <h2>Group Members</h2>
-        <ul>
-            {% for member in group_member %}
-            <li>{{ member.username }}</li>
-            {% empty %}
-            <li>No members yet.</li>
-            {% endfor %}
-        </ul>
-    </div>
-
-
 </div>
+
 
 
 
