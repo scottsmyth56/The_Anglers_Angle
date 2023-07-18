@@ -1,31 +1,31 @@
 {% load static %}
 {%block content %}
 
-
-<div class="col-12 mt-3">
-    <div class="row">
-        {% for comp in competitions%}
-        <div class="col-sm-12 col-md-6 col-lg-6 col-xl-2 mb-4">
-            <div class="card">
-                <div class="image-container">
-                    {% if 'placeholder' in comp.featuredImage.url %}
-                    <img src="{% static 'images/aa-logo.png' %}" class="card-img-top" alt="Post Image">
-                    {% else %}
-                    <img src="{{ comp.featuredImage.url }}" class="card-img-top" alt="Post Image">
-                    {% endif %}
+<div class="container-fluid">
+    <div class="row justify-content-center">
+        <div class="col-12 mt-3">
+            <div class="row">
+                {% for comp in competitions %}
+                <div class="col-sm-12 col-md-4 col-lg-3 col-xl-3 mb-4">
+                    <div class="card  card-outer text-center">
+                        <div class="image-container">
+                            {% if 'placeholder' in comp.featuredImage.url %}
+                            <img src="{% static 'images/aa-logo.png' %}" class="card-img-top" alt="Post Image">
+                            {% else %}
+                            <img src="{{ comp.featuredImage.url }}" class="card-img-top" alt="Post Image">
+                            {% endif %}
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">{{ comp.title }}</h5>
+                            <p class="description-text-white">{{ comp.date }}</p>
+                            <a href="{% url 'viewCompetitionDetailed' comp.competition_id %}" class="btn btn-primary post-button">Read More</a>
+                        </div>
+                    </div>
                 </div>
-                <div class="card-body">
-                    <h5 class="card-title">{{ comp.title }}</h5>
-                    <p class="card-text">{{ comp.description }}</p>
-                    <a href="{% url 'viewCompetitionDetailed' comp.competition_id %}" class="btn btn-primary">Read
-                        More</a>
-                </div>
+                {% endfor %}
             </div>
         </div>
-        {% endfor %}
     </div>
 </div>
-
-
 
 {% endblock %}
