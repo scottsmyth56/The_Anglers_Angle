@@ -1,11 +1,17 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1>Delete Group</h1>
-<p>Are you sure you want to delete the Group "{{ object.group_name }}"?</p>
-<form method="POST">
-    {% csrf_token %}
-    <button type="submit">Yes, delete</button>
-</form>
-<a href="{% url 'index' %}"> Cancel </a>
+<div class="container-fluid delete-post-body">
+    <div class="row justify-content-center">
+        <h3 class="text-center action-header">Delete Group</h3>
+        <div class="col-lg-6">
+            <form method="POST" class="p-4 form-outer rounded">
+                {% csrf_token %}
+                <p class="description-text-white">Are you sure you want to delete the Group "{{ object.group_name }}"?</p>
+                <button type="submit" class="btn btn-danger">Yes, delete</button>
+                <a href="{% url 'groups' %}" class="btn btn-secondary">Cancel</a>
+            </form>
+        </div>
+    </div>
+</div>
 {% endblock %}
