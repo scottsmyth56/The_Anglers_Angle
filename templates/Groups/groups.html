@@ -12,7 +12,7 @@
 
 {% endif %}
 
-<div class="container-fluid">
+<div class="container-fluid group-container">
     <div class="container">
         <a href="{% url 'addGroup' %}"><button type="button" class="btn btn-primary">Create
                 group</button></a>
@@ -23,7 +23,7 @@
         <div class="row">
             {% for group in groups %}
             <div class="col-sm-12 col-md-6 col-lg-6 col-xl-2 mb-4">
-                <div class="card">
+                <div class="card card-outer">
                     <div class="image-container">
                         {% if 'placeholder' in group.featuredImage.url %}
                         <img src="{% static 'images/aa-logo.png' %}" class="card-img-top" alt="Post Image">
@@ -31,10 +31,10 @@
                         <img src="{{ group.featuredImage.url }}" class="card-img-top" alt="Post Image">
                         {% endif %}
                     </div>
-                    <div class="card-body">
+                    <div class="card-body text-center">
                         <h5 class="card-title">{{ group.group_name }}</h5>
-                        <p class="card-text">{{ group.description }}</p>
-                        <a href="{% url 'viewGroup' group.group_id %}" class="btn btn-primary">View Group</a>
+                        <p class="card-text">{{ group.description|truncatechars:100 }}</p>
+                        <a href="{% url 'viewGroup' group.group_id %}" class="btn btn-primary post-button">View Group</a>
                     </div>
                 </div>
             </div>
