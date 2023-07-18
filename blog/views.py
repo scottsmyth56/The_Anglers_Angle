@@ -100,3 +100,18 @@ class addComment(LoginRequiredMixin, View):
         Comment.objects.create(user_id=request.user,
                                post_id=post, comment=request.POST['comment'])
         return redirect('viewPost', pk=post.pk)
+
+class editComment(LoginRequiredMixin, generic.UpdateView):
+    model = Comment
+    fields = ['comment']
+    template_name = 'Posts/edit_comment.html'
+
+    def get_success_url(self):
+        return reverse_lazy('viewPost', kwargs={'pk': self.object.post_id.pk})
+    
+class deleteComment(LoginRequiredMixin, generic.DeleteView):
+    model = Comment
+    template_name = 'Posts/delete_comment.html'
+
+    def get_success_url(self):
+        return reverse_lazy('viewPost', kwargs={'pk': self.object.post_id.pk})

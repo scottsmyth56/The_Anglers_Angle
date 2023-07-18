@@ -6,7 +6,7 @@
 
 <img src="{{ object.image1.url }}" alt="{{ object.title }}">
 <img src="{{ object.image2.url }}" alt="{{ object.title }}">
-<p>Category: {{ object.category }}</p>
+<p>Category: "{{ object.category }}"</p>
 
 
 
@@ -27,7 +27,7 @@
 {% endif %}
 
 
-<h2>Comments:</h2>
+<h2>Comments: ({{ comments|length }})</h2>
 {% for comment in comments %}
 <div class="card mb-3">
     <div class="card-header d-flex justify-content-between align-items-center">
@@ -35,17 +35,18 @@
             <strong>{{ comment.user_id.username }}</strong>
             <small class="text-muted">{{ comment.timestamp }}</small>
         </div>
-        {% if comment.user_id == request.user %}
-        <div class="dropdown">
-            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
-                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            </button>
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <a class="dropdown-item" href="#">Delete</a>
-                <a class="dropdown-item" href="#">Delete</a>
-
-            </div>
-        </div>
+        {% if comment.user_id.username == user.username %}
+                    <div class="dropdown">
+                        <button class="btn btn-link dropdown-toggle" type="button" id="dropdownMenuButton"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fas fa-ellipsis-v"></i>
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <li><a class="dropdown-item" href="{% url 'editComment' comment.comment_id %}">Edit</a></li>
+                            <li><a class="dropdown-item" href="{% url 'deleteComment' comment.comment_id %}">Delete</a></li>
+                       
+                        </ul>
+                    </div>
         {% endif %}
     </div>
     <div class="card-body">
