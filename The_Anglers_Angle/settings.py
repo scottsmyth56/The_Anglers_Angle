@@ -28,10 +28,10 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 X_FRAME_OPTIONS = 'SAMEORIGIN'
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ["8000-scottsmyth56-the-anglers-ahncinhraa.us2.codeanyapp.com",
-                 'the-anglers-angle-b8d0becc6882.herokuapp.com', 'localhost']
+                 'the-anglers-angle-b8d0becc6882.herokuapp.com', 'localhost', '127.0.0.1']
 
 
 # Application definition
