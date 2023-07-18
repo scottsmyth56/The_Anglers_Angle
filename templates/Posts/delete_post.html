@@ -1,11 +1,18 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1>Delete Post</h1>
-<p>Are you sure you want to delete the post "{{ object.title }}"?</p>
-<form method="POST">
-    {% csrf_token %}
-    <button type="submit">Yes, delete</button>
-</form>
-<a href="{% url 'index' %}"> Cancel </a>
+<div class="container-fluid delete-post-body">
+    <div class="row justify-content-center">
+        <h3 class="text-center action-header">Delete Post</h3>
+        <div class="col-lg-6">
+            <form method="POST" class="p-4 form-outer rounded">
+                {% csrf_token %}
+                <p class="confirmation-p">Are you sure you want to delete the post "{{ object.title }}"?</p>
+                <button type="submit" class="btn btn-primary">Yes, delete</button>
+                <a href="{% url 'index' %}" class="btn btn-secondary">Cancel</a>
+            </form>
+        </div>
+    </div>
+</div>
+
 {% endblock %}
