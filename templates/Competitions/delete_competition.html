@@ -1,11 +1,20 @@
 {% extends 'base.html' %}
+{% load widget_tweaks %}
 
 {% block content %}
-<h1>Delete Competition</h1>
-<p>Are you sure you want to remove the Competition "{{ object.title }}"?</p>
-<form method="POST">
-    {% csrf_token %}
-    <button type="submit">Yes, delete</button>
-</form>
-<a href="{% url 'index' %}"> Cancel </a>
+<div class="container-fluid delete-post-body">
+    <div class="row justify-content-center">
+        <h3 class="text-center action-header">Delete Competition</h3>
+        <div class="col-lg-6">
+            <form method="POST" class="p-4 form-outer rounded">
+                {% csrf_token %}
+                <p class="text-center description-text-white">Are you sure you want to delete the competition "{{ object.title }}"?</p>
+                <div class="d-flex justify-content-center">
+                    <button type="submit" class="btn btn-danger" style="margin-right:8px">Yes, delete</button>
+                    <a href="{% url 'index' %}" class="btn btn-secondary">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 {% endblock %}
