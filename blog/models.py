@@ -1,14 +1,19 @@
 from django.db import models
+
 # from django.contrib.auth.models import User
 from cloudinary.models import CloudinaryField
 from cloudinary_storage.storage import RawMediaCloudinaryStorage
-from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
+from django.contrib.auth.models import (
+    AbstractBaseUser,
+    BaseUserManager,
+    PermissionsMixin,
+)
 
 
 class UserManager(BaseUserManager):
     def create_user(self, username, password=None, **extra_fields):
         if not username:
-            raise ValueError('The Username field must be set')
+            raise ValueError("The Username field must be set")
 
         user = self.model(username=username, **extra_fields)
         user.set_password(password)
@@ -16,8 +21,8 @@ class UserManager(BaseUserManager):
         return user
 
     def create_superuser(self, username, password=None, **extra_fields):
-        extra_fields.setdefault('is_staff', True)
-        extra_fields.setdefault('is_superuser', True)
+        extra_fields.setdefault("is_staff", True)
+        extra_fields.setdefault("is_superuser", True)
 
         return self.create_user(username, password, **extra_fields)
 
@@ -28,7 +33,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     last_name = models.CharField(max_length=150)
     username = models.CharField(max_length=150, unique=True)
     password = models.CharField(max_length=150)
-    profile_picture = CloudinaryField('image', default='placeholder')
+    profile_picture = CloudinaryField("image", default="placeholder")
     email = models.EmailField(max_length=254, unique=True, null=True)
 
     is_active = models.BooleanField(default=True)
@@ -37,8 +42,8 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     objects = UserManager()
 
-    USERNAME_FIELD = 'username'
-    REQUIRED_FIELDS = ['first_name', 'last_name', 'email']
+    USERNAME_FIELD = "username"
+    REQUIRED_FIELDS = ["first_name", "last_name", "email"]
 
 
 class Group(models.Model):
@@ -46,9 +51,13 @@ class Group(models.Model):
     group_name = models.CharField(max_length=100)
     description = models.TextField()
     featuredImage = CloudinaryField(
-        'image', default='placeholder', null=True, blank=True)
+        "image", default="placeholder", null=True, blank=True
+    )
     is_approved = models.BooleanField(default=False)
     creator = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.group_name
 
 
 class Post(models.Model):
@@ -56,12 +65,11 @@ class Post(models.Model):
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=100)
     content = models.TextField()
-    image1 = CloudinaryField('image', default='placeholder')
-    image2 = CloudinaryField('image', default='placeholder')
+    image1 = CloudinaryField("image", default="placeholder")
+    image2 = CloudinaryField("image", default="placeholder")
     timestamp = models.DateTimeField(auto_now_add=True)
     category = models.CharField(max_length=100, null=True, blank=True)
-    group = models.ForeignKey(
-        Group, on_delete=models.CASCADE, null=True, blank=True)
+    group = models.ForeignKey(Group, on_delete=models.CASCADE, null=True, blank=True)
 
     class Meta:
         ordering = ["-timestamp"]
@@ -73,8 +81,7 @@ class Post(models.Model):
 class Comment(models.Model):
     comment_id = models.AutoField(primary_key=True)
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
-    post_id = models.ForeignKey(
-        Post, related_name='comments', on_delete=models.CASCADE)
+    post_id = models.ForeignKey(Post, related_name="comments", on_delete=models.CASCADE)
     comment = models.TextField()
     timestamp = models.DateTimeField(auto_now_add=True)
 
@@ -85,8 +92,7 @@ class Comment(models.Model):
 class Like(models.Model):
     like_id = models.AutoField(primary_key=True)
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
-    post_id = models.ForeignKey(
-        Post, related_name='likes', on_delete=models.CASCADE)
+    post_id = models.ForeignKey(Post, related_name="likes", on_delete=models.CASCADE)
 
 
 class UserGroup(models.Model):
@@ -103,10 +109,12 @@ class Competition(models.Model):
     date = models.DateTimeField()
     creator = models.ForeignKey(User, on_delete=models.CASCADE)
     featuredImage = CloudinaryField(
-        'image', default='placeholder', null=True, blank=True)
+        "image", default="placeholder", null=True, blank=True
+    )
 
     def __str__(self):
         return self.title
+
 
 class CompetitionUser(models.Model):
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
