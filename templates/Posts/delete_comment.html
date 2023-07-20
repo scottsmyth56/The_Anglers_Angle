@@ -1,6 +1,19 @@
-<h2>Delete Comment</h2>
-<p>Are you sure you want to delete the comment?</p>
-<form method="post">
-    {% csrf_token %}
-    <button type="submit">Yes, delete</button>
-</form>
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container-fluid delete-post-body">
+    <div class="row justify-content-center">
+        <div class="col-lg-6">
+            <h2 class="text-center action-header">Delete Comment</h2>
+            <div class="p-4 form-outer rounded text-center">
+                <p class="confirmation-p">Are you sure you want to delete the comment?</p>
+                <form method="POST">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger">Yes, delete</button>
+                    <a href="{% url 'index' %}" class="btn btn-secondary">Cancel</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
