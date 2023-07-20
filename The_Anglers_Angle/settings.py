@@ -86,7 +86,10 @@ WSGI_APPLICATION = 'The_Anglers_Angle.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
-if DEBUG:
+
+TEST = True
+
+if TEST:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
