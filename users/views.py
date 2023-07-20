@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth import login as auth_login, authenticate, logout
-from .forms import RegistrationForm, LoginForm, EditUserForm
-from blog.models import User
+from .forms import RegistrationForm, LoginForm, EditUserForm, ResetPasswordForm
+from blog.models import User,Post
 from django.contrib.auth.decorators import login_required
 import os
 
@@ -66,5 +66,23 @@ def edit_profile(request):
 @login_required
 def view_profile(request, username):
     user = get_object_or_404(User, username=username)
-    context = {'user': user}
+    user_posts = Post.objects.filter(user_id=user)  
+    context = {
+        'user': user,
+        'posts': user_posts,
+    }
     return render(request, 'Auth/profile.html', context)
+
+@login_required
+def change_password(request):
+    if request.method == 'POST':
+        form = ResetPasswordForm(request.user, request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Password successfully changed.')
+            return redirect('profile', username=request.user.username)
+        else:
+            messages.error(request, 'Please confirm new passwords match and your current password is correct and try again')
+    else:
+        form = ResetPasswordForm(request.user)
+    return render(request, 'Auth/change_password.html', {'form': form})
