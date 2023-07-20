@@ -2,7 +2,8 @@ from django.test import TestCase
 from django.test import TestCase, Client
 from django.urls import reverse
 from django.contrib.auth.mixins import LoginRequiredMixin
-from blog.models import Post,User
+from blog.models import Post,User,Like
+from django.shortcuts import get_object_or_404
 
 class SetUpClass(TestCase):
     def setUp(self):
@@ -88,6 +89,7 @@ class AddPostViewTests(SetUpClass):
 class PostViewTests(SetUpClass):
     def setUp(self):
         super().setUp()
+        
         self.post = Post.objects.create(
             user_id=self.user, 
             title="Test Title 1", 
@@ -97,8 +99,15 @@ class PostViewTests(SetUpClass):
             category="Test Category"
         )
         
-        self.edit_post_url = reverse('editPost', kwargs={'pk': self.post.pk}) 
+        Like.objects.create(user_id=self.user, post_id=self.post)
         
+        self.edit_post_url = reverse('editPost', kwargs={'pk': self.post.pk}) 
+        self.delete_post_url = reverse('deletePost', kwargs={'pk': self.post.pk})
+        self.view_post_url = reverse('viewPost', kwargs={'pk': self.post.pk})
+        self.like_post_url = reverse('likePost', kwargs={'pk': self.post.pk})
+        self.unlike_post_url = reverse('unlikePost', kwargs={'pk': self.post.pk})
+
+
     def test_successfully_update_post(self):
         self.client.login(username='testuser', password='12345')
         response = self.client.post(self.edit_post_url, {
@@ -109,8 +118,41 @@ class PostViewTests(SetUpClass):
             'category': 'Updated Test Category',
         })
 
-    
         self.post.refresh_from_db()
         self.assertEqual(self.post.title, 'Updated Test Title')
         self.assertEqual(self.post.content, 'Updated Test Content')
         self.assertEqual(self.post.category, 'Updated Test Category')
+
+    def test_successfully_delete_post(self):
+        self.client.login(username='testuser', password='12345')
+        initial_post_count = Post.objects.count()
+        response = self.client.post(self.delete_post_url, follow=True)
+
+        self.assertEqual(Post.objects.count(), initial_post_count-1)
+    
+    def test_view_post_successfully(self):
+        self.client.login(username='testuser', password='12345')
+        response = self.client.get(self.view_post_url)
+
+        self.assertEqual(str(response.context['user']), 'testuser')
+        self.assertTemplateUsed(response, 'Posts/post_detail.html')
+        self.assertEqual(response.context['post'], self.post)
+        
+    def test_like_post_successfully(self):
+        self.client.login(username='testuser', password='12345')
+        Like.objects.filter(post_id=self.post.pk, user_id=self.user.pk).delete()
+        initial_like_count = Like.objects.count()
+        response = self.client.post(self.like_post_url)
+
+        self.assertEqual(Like.objects.count(), initial_like_count+1)
+        like = get_object_or_404(Like, post_id=self.post.pk, user_id=self.user.pk)
+        self.assertIsNotNone(like)
+        
+    def test_unlike_post_successfully(self):
+        self.client.login(username='testuser', password='12345')
+        initial_like_count = Like.objects.count()
+        response = self.client.post(self.unlike_post_url)
+
+        self.assertEqual(Like.objects.count(), initial_like_count-1)
+        like = Like.objects.filter(post_id=self.post.pk, user_id=self.user.pk).first()
+        self.assertIsNone(like)
