@@ -2,7 +2,7 @@ from django.test import TestCase
 from django.test import TestCase, Client
 from django.urls import reverse
 from django.contrib.auth.mixins import LoginRequiredMixin
-from blog.models import Post, User, Like, Comment, Competition
+from blog.models import Post, User, Like, Comment, Competition, CompetitionUser
 from django.shortcuts import get_object_or_404
 
 
@@ -32,11 +32,15 @@ class ViewCompetitionsTest(SetUpClass):
         self.delete_competition_url = reverse(
             "deleteCompetition", kwargs={"pk": self.competition.pk}
         )
-        self.view_competitions_url = reverse("competitions")
-        self.add_competition_url = reverse("addCompetition")
+
+        self.enter_competition_url = reverse(
+            "enterCompetition", kwargs={"pk": self.competition.pk}
+        )
         self.delete_competition_url = reverse(
             "deleteCompetition", kwargs={"pk": self.competition.pk}
         )
+        self.view_competitions_url = reverse("competitions")
+        self.add_competition_url = reverse("addCompetition")
 
     def test_view_competitions_successfully(self):
         self.client.login(username="testuser", password="12345")
@@ -101,3 +105,27 @@ class ViewCompetitionsTest(SetUpClass):
         self.assertEqual(Competition.objects.count(), initial_competition_count - 1)
         with self.assertRaises(Competition.DoesNotExist):
             Competition.objects.get(pk=self.competition.pk)
+
+    def test_successfully_enter_competition(self):
+        self.client.login(username="testuser", password="12345")
+        response = self.client.get(self.enter_competition_url)
+
+        competition_user_exists = CompetitionUser.objects.filter(
+            user_id=self.user, competition_id=self.competition
+        ).exists()
+
+        self.assertTrue(competition_user_exists)
+
+    def test_successfully_leave_competition(self):
+        CompetitionUser.objects.create(
+            user_id=self.user, competition_id=self.competition
+        )
+
+        self.client.login(username="testuser", password="12345")
+        response = self.client.get(self.enter_competition_url)
+
+        competition_user_exists = CompetitionUser.objects.filter(
+            user_id=self.user, competition_id=self.competition
+        ).exists()
+
+        self.assertFalse(competition_user_exists)
