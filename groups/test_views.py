@@ -24,15 +24,20 @@ class SetUpClass(TestCase):
             creator=self.user,
         )
 
+        self.client.login(username="testuser", password="12345")
+
 
 class GroupsViewTests(SetUpClass):
     def setUp(self):
         super().setUp()
         self.view_groups_url = reverse("groups")
         self.add_group_url = reverse("addGroup")
+        self.view_group_url = reverse("viewGroup", kwargs={"pk": self.group1.pk})
+        self.enter_group_url = reverse("enterGroup", kwargs={"pk": self.group1.pk})
+        self.edit_group_url = reverse("editGroup", kwargs={"pk": self.group1.pk})
+        self.delete_group_url = reverse("deleteGroup", kwargs={"pk": self.group1.pk})
 
     def test_view_groups_successfully(self):
-        self.client.login(username="testuser", password="12345")
         response = self.client.get(self.view_groups_url)
 
         self.assertTemplateUsed(response, "Groups/groups.html")
@@ -45,7 +50,6 @@ class GroupsViewTests(SetUpClass):
         )
 
     def test_successfully_create_group(self):
-        self.client.login(username="testuser", password="12345")
         initial_group_count = Group.objects.count()
 
         response = self.client.post(
@@ -64,3 +68,59 @@ class GroupsViewTests(SetUpClass):
         self.assertEqual(str(new_group.featuredImage), "placeholder")
         self.assertFalse(new_group.is_approved)
         self.assertEqual(new_group.creator, self.user)
+
+    def test_view_group_successfully(self):
+        response = self.client.get(self.view_group_url)
+
+        self.assertTemplateUsed(response, "Groups/groupIndex.html")
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(
+            response.context["group_member"].count(),
+            UserGroup.objects.filter(group_id=self.group1, user_id=self.user).count(),
+        )
+        self.assertEqual(
+            response.context["group_user"].count(),
+            UserGroup.objects.filter(group_id=self.group1, user_id=self.user).count(),
+        )
+        self.assertEqual(
+            list(response.context["group_user"]),
+            list(UserGroup.objects.filter(group_id=self.group1, user_id=self.user)),
+        )
+
+    def test_join_group_successfully(self):
+        self.client.get(self.enter_group_url)
+
+        self.assertTrue(
+            UserGroup.objects.filter(user_id=self.user, group_id=self.group1).exists()
+        )
+
+    def test_leave_group_successfully(self):
+        UserGroup.objects.create(user_id=self.user, group_id=self.group1)
+        self.client.get(self.enter_group_url)
+
+        self.assertFalse(
+            UserGroup.objects.filter(user_id=self.user, group_id=self.group1).exists()
+        )
+
+    def test_successfully_update_group(self):
+        response = self.client.post(
+            self.edit_group_url,
+            {
+                "group_name": "Updated Test Group Name",
+                "description": "Updated Test Description",
+                "featuredImage": "placeholder",
+            },
+        )
+
+        self.group1.refresh_from_db()
+        self.assertEqual(self.group1.group_name, "Updated Test Group Name")
+        self.assertEqual(self.group1.description, "Updated Test Description")
+        self.assertEqual(str(self.group1.featuredImage), "placeholder")
+
+    def test_successfully_delete_group(self):
+        self.client.login(username="testuser", password="12345")
+        initial_group_count = Group.objects.count()
+        response = self.client.post(self.delete_group_url)
+
+        self.assertEqual(Group.objects.count(), initial_group_count - 1)
+        self.assertRaises(Group.DoesNotExist, Group.objects.get, pk=self.group1.pk)
