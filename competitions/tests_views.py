@@ -9,7 +9,8 @@ from django.shortcuts import get_object_or_404
 class SetUpClass(TestCase):
     def setUp(self):
         self.client = Client()
-        self.user = User.objects.create_user(username="testuser", password="12345")
+        self.user = User.objects.create_user(
+            username="testuser", password="12345")
 
 
 class ViewCompetitionsTest(SetUpClass):
@@ -48,7 +49,10 @@ class ViewCompetitionsTest(SetUpClass):
         self.assertTemplateUsed(response, "Competitions/competitions.html")
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.context["user"], self.user)
-        self.assertEqual(list(response.context["competitions"]), [self.competition])
+        self.assertEqual(
+            list(
+                response.context["competitions"]), [
+                self.competition])
 
     def test_successfully_create_competition(self):
         self.client.login(username="testuser", password="12345")
@@ -70,7 +74,8 @@ class ViewCompetitionsTest(SetUpClass):
     def test_view_competition_detail_successfully(self):
         self.client.login(username="testuser", password="12345")
         response = self.client.get(self.view_competition_detail_url)
-        self.assertTemplateUsed(response, "Competitions/competition_detail.html")
+        self.assertTemplateUsed(
+            response, "Competitions/competition_detail.html")
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.context["user"], self.user)
         self.assertEqual(response.context["competition_user"].count(), 0)
@@ -93,7 +98,9 @@ class ViewCompetitionsTest(SetUpClass):
         self.competition.refresh_from_db()
         self.assertEqual(self.competition.title, "Updated Test Title")
         self.assertEqual(self.competition.location, "Updated Test Location")
-        self.assertEqual(self.competition.description, "Updated Test Description")
+        self.assertEqual(
+            self.competition.description,
+            "Updated Test Description")
         self.assertEqual(self.competition.category, "Updated Test Category")
 
     def test_successfully_delete_competition(self):
@@ -102,7 +109,9 @@ class ViewCompetitionsTest(SetUpClass):
         response = self.client.post(self.delete_competition_url)
 
         self.assertEqual(response.status_code, 302)
-        self.assertEqual(Competition.objects.count(), initial_competition_count - 1)
+        self.assertEqual(
+            Competition.objects.count(),
+            initial_competition_count - 1)
         with self.assertRaises(Competition.DoesNotExist):
             Competition.objects.get(pk=self.competition.pk)
 

@@ -10,7 +10,8 @@ from django.urls import reverse_lazy, reverse
 class SetUpClass(TestCase):
     def setUp(self):
         self.client = Client()
-        self.user = User.objects.create_user(username="testuser", password="12345")
+        self.user = User.objects.create_user(
+            username="testuser", password="12345")
         self.group1 = Group.objects.create(
             group_name="Test Group 1",
             description="Test Description 1",
@@ -32,10 +33,18 @@ class GroupsViewTests(SetUpClass):
         super().setUp()
         self.view_groups_url = reverse("groups")
         self.add_group_url = reverse("addGroup")
-        self.view_group_url = reverse("viewGroup", kwargs={"pk": self.group1.pk})
-        self.enter_group_url = reverse("enterGroup", kwargs={"pk": self.group1.pk})
-        self.edit_group_url = reverse("editGroup", kwargs={"pk": self.group1.pk})
-        self.delete_group_url = reverse("deleteGroup", kwargs={"pk": self.group1.pk})
+        self.view_group_url = reverse(
+            "viewGroup", kwargs={
+                "pk": self.group1.pk})
+        self.enter_group_url = reverse(
+            "enterGroup", kwargs={
+                "pk": self.group1.pk})
+        self.edit_group_url = reverse(
+            "editGroup", kwargs={
+                "pk": self.group1.pk})
+        self.delete_group_url = reverse(
+            "deleteGroup", kwargs={
+                "pk": self.group1.pk})
 
     def test_view_groups_successfully(self):
         response = self.client.get(self.view_groups_url)
@@ -76,31 +85,38 @@ class GroupsViewTests(SetUpClass):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(
             response.context["group_member"].count(),
-            UserGroup.objects.filter(group_id=self.group1, user_id=self.user).count(),
+            UserGroup.objects.filter(
+                group_id=self.group1,
+                user_id=self.user).count(),
         )
         self.assertEqual(
             response.context["group_user"].count(),
-            UserGroup.objects.filter(group_id=self.group1, user_id=self.user).count(),
+            UserGroup.objects.filter(
+                group_id=self.group1,
+                user_id=self.user).count(),
         )
         self.assertEqual(
-            list(response.context["group_user"]),
-            list(UserGroup.objects.filter(group_id=self.group1, user_id=self.user)),
-        )
+            list(
+                response.context["group_user"]), list(
+                UserGroup.objects.filter(
+                    group_id=self.group1, user_id=self.user)), )
 
     def test_join_group_successfully(self):
         self.client.get(self.enter_group_url)
 
         self.assertTrue(
-            UserGroup.objects.filter(user_id=self.user, group_id=self.group1).exists()
-        )
+            UserGroup.objects.filter(
+                user_id=self.user,
+                group_id=self.group1).exists())
 
     def test_leave_group_successfully(self):
         UserGroup.objects.create(user_id=self.user, group_id=self.group1)
         self.client.get(self.enter_group_url)
 
         self.assertFalse(
-            UserGroup.objects.filter(user_id=self.user, group_id=self.group1).exists()
-        )
+            UserGroup.objects.filter(
+                user_id=self.user,
+                group_id=self.group1).exists())
 
     def test_successfully_update_group(self):
         response = self.client.post(
@@ -123,4 +139,7 @@ class GroupsViewTests(SetUpClass):
         response = self.client.post(self.delete_group_url)
 
         self.assertEqual(Group.objects.count(), initial_group_count - 1)
-        self.assertRaises(Group.DoesNotExist, Group.objects.get, pk=self.group1.pk)
+        self.assertRaises(
+            Group.DoesNotExist,
+            Group.objects.get,
+            pk=self.group1.pk)

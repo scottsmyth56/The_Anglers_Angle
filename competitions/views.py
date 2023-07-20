@@ -8,6 +8,9 @@ from django.http import HttpResponseRedirect
 
 
 class viewCompetitions(LoginRequiredMixin, generic.ListView):
+    """
+    View for displaying a list of competitions.
+    """
     model = Competition
     template_name = "Competitions/competitions.html"
     context_object_name = "competitions"
@@ -19,8 +22,17 @@ class viewCompetitions(LoginRequiredMixin, generic.ListView):
 
 
 class addCompetition(LoginRequiredMixin, generic.CreateView):
+    """
+    View for adding a new competition.
+    """
     model = Competition
-    fields = ["title", "location", "description", "category", "date", "featuredImage"]
+    fields = [
+        "title",
+        "location",
+        "description",
+        "category",
+        "date",
+        "featuredImage"]
     template_name = "Competitions/add_competition.html"
     success_url = reverse_lazy("competitions")
 
@@ -31,6 +43,9 @@ class addCompetition(LoginRequiredMixin, generic.CreateView):
 
 
 class viewCompetitionDetailed(LoginRequiredMixin, generic.DetailView):
+    """
+    View for displaying detailed information about a competition.
+    """
     model = Competition
     template_name = "Competitions/competition_detail.html"
 
@@ -48,6 +63,10 @@ class viewCompetitionDetailed(LoginRequiredMixin, generic.DetailView):
 
 
 class enterCompetition(LoginRequiredMixin, generic.CreateView):
+    """
+    View for entering or leaving a competition.
+    """
+
     def get(self, request, *args, **kwargs):
         pk = self.kwargs.get("pk")
         competition = get_object_or_404(Competition, pk=pk)
@@ -58,22 +77,29 @@ class enterCompetition(LoginRequiredMixin, generic.CreateView):
                 user_id=request.user, competition_id=competition
             ).delete()
             messages.success(
-                request, "You have successfully unregistered from this competition!"
-            )
+                request, "You have successfully unregistered from this competition!")
         else:
             CompetitionUser.objects.create(
                 user_id=request.user, competition_id=competition
             )
             messages.success(
-                request, "You have successfully signed up for this competition!"
-            )
+                request, "You have successfully signed up for this competition!")
 
         return redirect("viewCompetitionDetailed", pk=pk)
 
 
 class editCompetition(LoginRequiredMixin, generic.UpdateView):
+    """
+    View for editing a competition.
+    """
     model = Competition
-    fields = ["title", "location", "description", "category", "date", "featuredImage"]
+    fields = [
+        "title",
+        "location",
+        "description",
+        "category",
+        "date",
+        "featuredImage"]
     template_name = "Competitions/edit_competition.html"
     success_url = reverse_lazy("competitions")
 
@@ -84,6 +110,9 @@ class editCompetition(LoginRequiredMixin, generic.UpdateView):
 
 
 class deleteCompetition(LoginRequiredMixin, generic.DeleteView):
+    """
+    View for deleting a competition.
+    """
     model = Competition
     template_name = "Competitions/delete_competition.html"
     success_url = reverse_lazy("competitions")

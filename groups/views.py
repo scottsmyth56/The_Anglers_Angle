@@ -8,6 +8,9 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 
 
 class viewGroups(LoginRequiredMixin, generic.ListView):
+    """
+    View for displaying a list of groups.
+    """
     model = Group
     template_name = "Groups/groups.html"
     context_object_name = 'groups'
@@ -22,6 +25,10 @@ class viewGroups(LoginRequiredMixin, generic.ListView):
 
 
 class addGroup(LoginRequiredMixin, generic.CreateView):
+    """
+    View for adding a new group.
+    """
+
     model = Group
     fields = ['group_name', 'description', 'featuredImage']
     template_name = "Groups/add_group.html"
@@ -31,7 +38,8 @@ class addGroup(LoginRequiredMixin, generic.CreateView):
         form.instance.creator = self.request.user
         form.instance.is_approved = False
         messages.success(
-            self.request, f'Group "{form.instance.group_name}" created successfully, waiting for admin approval')
+            self.request,
+            f'Group "{form.instance.group_name}" created successfully, waiting for admin approval')
         return super().form_valid(form)
 
     def form_invalid(self, form):
@@ -41,6 +49,9 @@ class addGroup(LoginRequiredMixin, generic.CreateView):
 
 
 class viewGroup(LoginRequiredMixin, generic.DetailView):
+    """
+    View for displaying detailed information about a group.
+    """
     model = Group
     template_name = 'Groups/groupIndex.html'
 
@@ -58,10 +69,16 @@ class viewGroup(LoginRequiredMixin, generic.DetailView):
 
 
 class enterGroup(LoginRequiredMixin, generic.CreateView):
+    """
+    View for entering or leaving a group.
+    """
+
     def get(self, request, *args, **kwargs):
         pk = self.kwargs.get('pk')
         group = get_object_or_404(Group, pk=pk)
-        if UserGroup.objects.filter(user_id=request.user, group_id=group).exists():
+        if UserGroup.objects.filter(
+                user_id=request.user,
+                group_id=group).exists():
             UserGroup.objects.filter(
                 user_id=request.user, group_id=group).delete()
             messages.success(
@@ -76,6 +93,9 @@ class enterGroup(LoginRequiredMixin, generic.CreateView):
 
 
 class editGroup(LoginRequiredMixin, generic.UpdateView):
+    """
+    View for editing a group.
+    """
     model = Group
     fields = ['group_name', 'description', 'featuredImage']
     template_name = 'Groups/edit_group.html'
@@ -88,6 +108,9 @@ class editGroup(LoginRequiredMixin, generic.UpdateView):
 
 
 class deleteGroup(LoginRequiredMixin, generic.DeleteView):
+    """
+    View for deleting a group.
+    """
     model = Group
     template_name = 'Groups/delete_group.html'
     success_url = reverse_lazy('groups')
@@ -98,6 +121,9 @@ class deleteGroup(LoginRequiredMixin, generic.DeleteView):
 
 
 class addGroupPost(LoginRequiredMixin, generic.CreateView):
+    """
+    View for adding a post to a group.
+    """
     model = Post
     fields = ['title', 'content', 'image1', 'image2', 'category']
     template_name = "Posts/add_post.html"
@@ -111,10 +137,12 @@ class addGroupPost(LoginRequiredMixin, generic.CreateView):
         messages.success(self.request, 'Group Post added Succesfully')
         form.save()
         return redirect('viewGroup', pk=group_id)
-    #  return super().form_valid(form)
 
 
 class editGroupPost(LoginRequiredMixin, generic.UpdateView):
+    """
+    View for editing a group post.
+    """
     model = Post
     fields = ['title', 'content', 'image1', 'image2', 'category']
     template_name = 'Posts/edit_post.html'
@@ -133,6 +161,9 @@ class editGroupPost(LoginRequiredMixin, generic.UpdateView):
 
 
 class deleteGroupPost(LoginRequiredMixin, generic.DeleteView):
+    """
+    View for deleting a group post.
+    """
     model = Post
     template_name = 'Posts/delete_post.html'
 

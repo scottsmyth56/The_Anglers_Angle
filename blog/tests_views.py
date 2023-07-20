@@ -9,7 +9,8 @@ from django.shortcuts import get_object_or_404
 class SetUpClass(TestCase):
     def setUp(self):
         self.client = Client()
-        self.user = User.objects.create_user(username="testuser", password="12345")
+        self.user = User.objects.create_user(
+            username="testuser", password="12345")
 
 
 class IndexViewTests(SetUpClass):
@@ -111,10 +112,14 @@ class PostTests(SetUpClass):
         Like.objects.create(user_id=self.user, post_id=self.post)
 
         self.edit_post_url = reverse("editPost", kwargs={"pk": self.post.pk})
-        self.delete_post_url = reverse("deletePost", kwargs={"pk": self.post.pk})
+        self.delete_post_url = reverse(
+            "deletePost", kwargs={
+                "pk": self.post.pk})
         self.view_post_url = reverse("viewPost", kwargs={"pk": self.post.pk})
         self.like_post_url = reverse("likePost", kwargs={"pk": self.post.pk})
-        self.unlike_post_url = reverse("unlikePost", kwargs={"pk": self.post.pk})
+        self.unlike_post_url = reverse(
+            "unlikePost", kwargs={
+                "pk": self.post.pk})
 
     def test_successfully_update_post(self):
         self.client.login(username="testuser", password="12345")
@@ -151,12 +156,17 @@ class PostTests(SetUpClass):
 
     def test_like_post_successfully(self):
         self.client.login(username="testuser", password="12345")
-        Like.objects.filter(post_id=self.post.pk, user_id=self.user.pk).delete()
+        Like.objects.filter(
+            post_id=self.post.pk,
+            user_id=self.user.pk).delete()
         initial_like_count = Like.objects.count()
         response = self.client.post(self.like_post_url)
 
         self.assertEqual(Like.objects.count(), initial_like_count + 1)
-        like = get_object_or_404(Like, post_id=self.post.pk, user_id=self.user.pk)
+        like = get_object_or_404(
+            Like,
+            post_id=self.post.pk,
+            user_id=self.user.pk)
         self.assertIsNotNone(like)
 
     def test_unlike_post_successfully(self):
@@ -165,7 +175,9 @@ class PostTests(SetUpClass):
         response = self.client.post(self.unlike_post_url)
 
         self.assertEqual(Like.objects.count(), initial_like_count - 1)
-        like = Like.objects.filter(post_id=self.post.pk, user_id=self.user.pk).first()
+        like = Like.objects.filter(
+            post_id=self.post.pk,
+            user_id=self.user.pk).first()
         self.assertIsNone(like)
 
 
@@ -181,7 +193,9 @@ class CommentTests(SetUpClass):
             category="Test Category",
         )
 
-        self.add_comment_url = reverse("addComment", kwargs={"pk": self.post.pk})
+        self.add_comment_url = reverse(
+            "addComment", kwargs={
+                "pk": self.post.pk})
 
     def test_add_comment_successfully(self):
         self.client.login(username="testuser", password="12345")
@@ -194,7 +208,10 @@ class CommentTests(SetUpClass):
         )
 
         self.assertEqual(Comment.objects.count(), initial_comment_count + 1)
-        comment = get_object_or_404(Comment, post_id=self.post.pk, user_id=self.user.pk)
+        comment = get_object_or_404(
+            Comment,
+            post_id=self.post.pk,
+            user_id=self.user.pk)
         self.assertIsNotNone(comment)
 
     def test_edit_comment_successfully(self):
@@ -202,7 +219,9 @@ class CommentTests(SetUpClass):
             user_id=self.user, post_id=self.post, comment="Original Comment"
         )
 
-        self.edit_comment_url = reverse("editComment", kwargs={"pk": self.comment.pk})
+        self.edit_comment_url = reverse(
+            "editComment", kwargs={
+                "pk": self.comment.pk})
         self.client.login(username="testuser", password="12345")
         response = self.client.post(
             self.edit_comment_url,
