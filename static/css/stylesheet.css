@@ -221,10 +221,12 @@
 .nav-link {
     color: white;
 }
-.message-index{
+
+.message-index {
     padding: 15px;
     margin: 0px;
 }
+
 .delete-post-body {
     background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
         url("../images/addPost-bck.webp") no-repeat center center;
@@ -234,13 +236,15 @@
     padding: 20px;
     height: 100vh;
 }
-.confirmation-p{
+
+.confirmation-p {
     color: white;
     font-weight: bold;
     font-family: 'Montserrat', sans-serif;
 
 }
-.post-container{
+
+.post-container {
     padding: 20px;
     background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
         url("../images/addPost-bck.webp") no-repeat center center;
@@ -249,38 +253,46 @@
     background-repeat: no-repeat;
     padding: 20px;
 }
-.post-title{
+
+.post-title {
     margin-bottom: 20px;
 }
-.wrapper-shadow{
+
+.wrapper-shadow {
     background: rgba(0, 0, 0, 0.5);
     box-shadow: rgba(0, 0, 0, 0.6) 0px 19px 38px, rgba(0, 0, 0, 1.22) 0px 15px 12px;
     color: white;
     border-radius: 10px;
 }
 
-.post-image{
-  height: 300px;
-  box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
+.post-image {
+    height: 300px;
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
 }
-.post-content{
+
+.post-content {
     margin-top: 15px;
     font-size: 20px;
 }
-.post-button{
+
+.post-button {
     margin-bottom: 15px;
     margin-top: 15px;
 }
-.comment-card{
+
+.comment-card {
     max-width: 700px !important;
 }
-.comment-card-body{
+
+.comment-card-body {
     padding: 10px;
 }
-.comment-card-header{
-    background-color: #0074D9 ;
+
+.comment-card-header {
+    background-color: #0074D9;
 }
-.group-container{
+
+.group-container {
     padding: 20px;
     background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
         url("../images/group-bck.webp") no-repeat center center;
@@ -288,7 +300,8 @@
     background-position: center;
     background-repeat: no-repeat;
 }
-.group-index-container{
+
+.group-index-container {
     background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
         url("../images/group-bck.webp") no-repeat center center;
     background-size: cover;
@@ -296,23 +309,27 @@
     background-repeat: no-repeat;
     padding: 20px;
 }
-.description-text-white{
+
+.description-text-white {
     color: white;
     font-family: 'Montserrat', sans-serif;
     font-weight: 500;
     font-size: 15px;
 }
-.member-table{
+
+.member-table {
     background-color: #0074D9;
     color: white;
     box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
 }
-.profile-container{
+
+.profile-container {
     background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-    url("../images/login-background.png") no-repeat center center;
+        url("../images/login-background.png") no-repeat center center;
     padding: 40px
 }
-.valdation-message{
+
+.valdation-message {
     color: red;
     text-align: center;
     font-weight: 700;

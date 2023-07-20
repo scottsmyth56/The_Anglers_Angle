@@ -7,12 +7,14 @@ from django.contrib.auth import authenticate
 from django.core.exceptions import ValidationError
 
 
-
 class RegistrationForm(forms.ModelForm):
     password = forms.CharField(
         widget=forms.PasswordInput(attrs={'class': 'form-input form-control'}))
     password2 = forms.CharField(
-        widget=forms.PasswordInput(attrs={'class': 'form-input form-control'}), label='Confirm Password')
+        widget=forms.PasswordInput(
+            attrs={
+                'class': 'form-input form-control'}),
+        label='Confirm Password')
 
     class Meta(UserCreationForm.Meta):
         model = User
@@ -61,7 +63,7 @@ class LoginForm(forms.Form):
             self.add_error('username', 'Username is required')
 
         if not password:
-            self.add_error('password', 'Password is required') 
+            self.add_error('password', 'Password is required')
 
         if username and password:
             user = authenticate(username=username, password=password)
@@ -77,13 +79,23 @@ class EditUserForm(forms.ModelForm):
         fields = ['first_name', 'last_name',
                   'email', 'username', 'profile_picture']
 
+
 class ResetPasswordForm(forms.Form):
     current_password = forms.CharField(
-        widget=forms.PasswordInput(attrs={'class': 'form-input form-control'}), label='Current Password')
+        widget=forms.PasswordInput(
+            attrs={
+                'class': 'form-input form-control'}),
+        label='Current Password')
     new_password = forms.CharField(
-        widget=forms.PasswordInput(attrs={'class': 'form-input form-control'}), label='New Password')
+        widget=forms.PasswordInput(
+            attrs={
+                'class': 'form-input form-control'}),
+        label='New Password')
     confirm_new_password = forms.CharField(
-        widget=forms.PasswordInput(attrs={'class': 'form-input form-control'}), label='Confirm New Password')
+        widget=forms.PasswordInput(
+            attrs={
+                'class': 'form-input form-control'}),
+        label='Confirm New Password')
 
     def __init__(self, user, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -96,10 +108,11 @@ class ResetPasswordForm(forms.Form):
         current_password = self.cleaned_data.get('current_password')
 
         if not check_password(current_password, self.user.password):
-            raise forms.ValidationError('Your current password was entered incorrectly. Please enter it again.')
-        
+            raise forms.ValidationError(
+                'Your current password was entered incorrectly. Please enter it again.')
+
         return current_password
-    
+
     def clean_confirm_new_password(self):
         """
         Validates that the new_password and confirm_new_password fields match.
@@ -109,8 +122,9 @@ class ResetPasswordForm(forms.Form):
 
         if new_password and confirm_new_password:
             if new_password != confirm_new_password:
-                raise forms.ValidationError('Your new passwords do not match. Please try again.')
-        
+                raise forms.ValidationError(
+                    'Your new passwords do not match. Please try again.')
+
         return confirm_new_password
 
     def save(self, commit=True):

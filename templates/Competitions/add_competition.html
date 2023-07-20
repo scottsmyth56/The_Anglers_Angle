@@ -1,48 +1,45 @@
 {% extends 'base.html' %}
 
 {% block content %}
-{% if messages %}
-{% for message in messages %}
-<div class="alert alert-{{ message.tags }}">
-    {{ message }}
-</div>
-{% endfor %}
-{% endif %}
+  {% if messages %}
+    {% for message in messages %}
+      <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+    {% endfor %}
+  {% endif %}
 
-<div class="container-fluid post-body">
+  <div class="container-fluid post-body">
     <div class="row justify-content-center">
-        <h3 class="text-center action-header">Add New Competition</h3>
-        <div class="col-lg-6">
-            <form method="POST" enctype="multipart/form-data" class="p-4 form-outer rounded">
-                {% csrf_token %}
-                <div class="mb-3">
-                    <label for="{{ form.title.id_for_label }}" class="form-label">Title:</label>
-                    <input type="text" class="form-control form-input" id="{{ form.title.id_for_label }}" name="{{ form.title.name }}">
-                </div>
-                <div class="mb-3">
-                    <label for="{{ form.location.id_for_label }}" class="form-label">Location:</label>
-                    <input type="text" class="form-control form-input" id="{{ form.location.id_for_label }}" name="{{ form.location.name }}">
-                </div>
-                <div class="mb-3">
-                    <label for="{{ form.description.id_for_label }}" class="form-label">Description:</label>
-                    <textarea class="form-control form-input" id="{{ form.description.id_for_label }}" name="{{ form.description.name }}"></textarea>
-                </div>
-                <div class="mb-3">
-                    <label for="{{ form.category.id_for_label }}" class="form-label">Category:</label>
-                    <input type="text" class="form-control form-input" id="{{ form.category.id_for_label }}" name="{{ form.category.name }}">
-                </div>
-                <div class="mb-3">
-                    <label for="{{ form.date.id_for_label }}" class="form-label">Date:</label>
-                    <input type="datetime-local" class="form-control form-input" id="{{ form.date.id_for_label }}" name="{{ form.date.name }}">
-                </div>
-                <div class="mb-3">
-                    <label for="{{ form.featuredImage.id_for_label }}" class="form-label">Featured Image:</label>
-                    <input type="file" class="form-control-file " id="{{ form.featuredImage.id_for_label }}" name="{{ form.featuredImage.name }}">
-                </div>
-                <button type="submit" class="btn btn-primary">Create</button>
-            </form>
-        </div>
+      <h3 class="text-center action-header">Add New Competition</h3>
+      <div class="col-lg-6">
+        <form method="POST" enctype="multipart/form-data" class="p-4 form-outer rounded">
+          {% csrf_token %}
+          <div class="mb-3">
+            <label for="{{ form.title.id_for_label }}" class="form-label">Title:</label>
+            <input type="text" class="form-control form-input" id="{{ form.title.id_for_label }}" name="{{ form.title.name }}" />
+          </div>
+          <div class="mb-3">
+            <label for="{{ form.location.id_for_label }}" class="form-label">Location:</label>
+            <input type="text" class="form-control form-input" id="{{ form.location.id_for_label }}" name="{{ form.location.name }}" />
+          </div>
+          <div class="mb-3">
+            <label for="{{ form.description.id_for_label }}" class="form-label">Description:</label>
+            <textarea class="form-control form-input" id="{{ form.description.id_for_label }}" name="{{ form.description.name }}"></textarea>
+          </div>
+          <div class="mb-3">
+            <label for="{{ form.category.id_for_label }}" class="form-label">Category:</label>
+            <input type="text" class="form-control form-input" id="{{ form.category.id_for_label }}" name="{{ form.category.name }}" />
+          </div>
+          <div class="mb-3">
+            <label for="{{ form.date.id_for_label }}" class="form-label">Date:</label>
+            <input type="datetime-local" class="form-control form-input" id="{{ form.date.id_for_label }}" name="{{ form.date.name }}" />
+          </div>
+          <div class="mb-3">
+            <label for="{{ form.featuredImage.id_for_label }}" class="form-label">Featured Image:</label>
+            <input type="file" class="form-control-file" id="{{ form.featuredImage.id_for_label }}" name="{{ form.featuredImage.name }}" />
+          </div>
+          <button type="submit" class="btn btn-primary">Create</button>
+        </form>
+      </div>
     </div>
-</div>
-
-{% endblock content%}
+  </div>
+{% endblock %}
