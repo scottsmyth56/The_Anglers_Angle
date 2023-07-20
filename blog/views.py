@@ -11,7 +11,7 @@ class index(LoginRequiredMixin, generic.ListView):
     model = Post
     queryset = Post.objects.order_by('timestamp')
     template_name = "index.html"
-    # context_object_name = 'posts'
+
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
