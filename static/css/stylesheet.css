@@ -312,3 +312,8 @@
     url("../images/login-background.png") no-repeat center center;
     padding: 40px
 }
+.valdation-message{
+    color: red;
+    text-align: center;
+    font-weight: 700;
+}

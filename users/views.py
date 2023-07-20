@@ -8,44 +8,38 @@ import os
 
 
 def register(request):
-    if request.method == 'GET':
-        form = RegistrationForm()
+   if request.method == 'POST':
+    form = RegistrationForm(request.POST)
+    if form.is_valid():
+        user = form.save(commit=False)
+        user.username = user.username.lower()
+        user.save()
+        return redirect('login')
+    else:
+        for field in form.errors:
+            message = form.errors[field][0] 
+            messages.error(request, message)
         return render(request, 'Auth/register_user.html', {'form': form})
-
-    if request.method == 'POST':
-        form = RegistrationForm(request.POST)
-        if form.is_valid():
-            user = form.save(commit=False)
-            user.username = user.username.lower()
-            user.save()
-            print("sending to login")
-            return redirect('login')
-        else:
-            return render(request, 'Auth/register_user.html', {'form': form})
 
 
 def login(request):
     if request.method == 'POST':
-        print(request.POST)
         form = LoginForm(request.POST)
-        print(f"form is valid: {form.is_valid()}")
-        if form.errors:
-            print(f"errors: {form.errors}")
         if form.is_valid():
             username = form.cleaned_data.get('username')
             password = form.cleaned_data.get('password')
-            print(f"{username} / {password}")
             user = authenticate(username=username, password=password)
             if user is not None:
-                print("user authenticated")
                 auth_login(request, user)
                 return redirect('index')
-            else:
-                print("user not authenticated")
+        else:
+            for error in form.non_field_errors():
+                messages.error(request, error)
     else:
         form = LoginForm()
-
+ 
     return render(request, 'Auth/login_user.html', {'form': form})
+
 
 
 @login_required

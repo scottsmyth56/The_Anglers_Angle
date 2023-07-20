@@ -16,11 +16,10 @@
     <style>
         body {
             background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-            url("{% static 'images/login-background.jpg' %}") no-repeat center center fixed;
+            url("{% static 'images/login-background.jpg' %}") no-repeat center center;
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
-            height: 100vh;
 
         }
     </style>
@@ -31,7 +30,13 @@
         <img src="{% static 'images/aa-logo.png' %}" alt="Logo" class="header-logo">
         <h1 class="header-title">The Anglers Angle</h1>
     </div>
-
+    {% if messages %}
+    {% for message in messages %}
+    <div class="alert alert-{{ message.tags }} valdation-message">
+    {{ message }}
+    </div>
+    {% endfor %}
+    {% endif %}
     <div class="outer-container-login">
         <div class="container-login">
             <div class="row justify-content-center mt-5">

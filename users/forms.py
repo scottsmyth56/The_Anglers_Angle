@@ -3,6 +3,9 @@ from blog.models import User
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, PasswordChangeForm
 from django.contrib import messages
 from django.contrib.auth.hashers import check_password
+from django.contrib.auth import authenticate
+from django.core.exceptions import ValidationError
+
 
 
 class RegistrationForm(forms.ModelForm):
@@ -27,12 +30,13 @@ class RegistrationForm(forms.ModelForm):
         self.fields['username'].widget.attrs.update(
             {'class': 'form-input form-control'})
 
-    def check_password(self):
-        password1 = self.cleaned_data.get('password')
-        password2 = self.cleaned_data.get('password2')
+    def clean(self):
+        cleaned_data = super().clean()
+        password1 = cleaned_data.get('password')
+        password2 = cleaned_data.get('password2')
         if password1 and password2 and password1 != password2:
-            messages.error('Passwords do not match ')
-        return password2
+            self.add_error('password2', 'Passwords do not match.')
+        return cleaned_data
 
     def save(self, commit=True):
         user = super().save(commit=False)
@@ -47,6 +51,24 @@ class LoginForm(forms.Form):
         widget=forms.TextInput(attrs={'class': 'form-input form-control'}))
     password = forms.CharField(
         widget=forms.PasswordInput(attrs={'class': 'form-input form-control'}))
+
+    def clean(self):
+        cleaned_data = super().clean()
+        username = cleaned_data.get('username')
+        password = cleaned_data.get('password')
+
+        if not username:
+            self.add_error('username', 'Username is required')
+
+        if not password:
+            self.add_error('password', 'Password is required') 
+
+        if username and password:
+            user = authenticate(username=username, password=password)
+            if user is None:
+                raise ValidationError("Invalid username or password")
+
+        return cleaned_data
 
 
 class EditUserForm(forms.ModelForm):
