@@ -2,7 +2,7 @@ from django.test import TestCase
 from django.test import TestCase, Client
 from django.urls import reverse
 from django.contrib.auth.mixins import LoginRequiredMixin
-from blog.models import Post,User,Like
+from blog.models import Post,User,Like,Comment
 from django.shortcuts import get_object_or_404
 
 class SetUpClass(TestCase):
@@ -86,7 +86,7 @@ class AddPostViewTests(SetUpClass):
         self.assertEqual(str(messages[0]), 'Post added Succesfully')
     
 
-class PostViewTests(SetUpClass):
+class PostTests(SetUpClass):
     def setUp(self):
         super().setUp()
         
@@ -156,3 +156,60 @@ class PostViewTests(SetUpClass):
         self.assertEqual(Like.objects.count(), initial_like_count-1)
         like = Like.objects.filter(post_id=self.post.pk, user_id=self.user.pk).first()
         self.assertIsNone(like)
+        
+class CommentTests(SetUpClass):
+    def setUp(self):
+        super().setUp()
+        self.post = Post.objects.create(
+            user_id=self.user, 
+            title="Test Title 1", 
+            content="Test Post 1", 
+            image1='placeholder', 
+            image2='placeholder', 
+            category="Test Category"
+        )
+        
+        self.add_comment_url = reverse('addComment', kwargs={'pk': self.post.pk})
+        
+
+    def test_add_comment_successfully(self):
+        self.client.login(username='testuser', password='12345')
+        initial_comment_count = Comment.objects.count()
+        response = self.client.post(self.add_comment_url, {
+            'comment': 'Test Comment',
+        })
+
+        self.assertEqual(Comment.objects.count(), initial_comment_count + 1)
+        comment = get_object_or_404(Comment, post_id=self.post.pk, user_id=self.user.pk)
+        self.assertIsNotNone(comment)
+
+    def test_edit_comment_successfully(self):
+            self.comment = Comment.objects.create(
+            user_id=self.user, 
+            post_id=self.post, 
+            comment="Original Comment"
+            )
+            
+            self.edit_comment_url = reverse('editComment', kwargs={'pk': self.comment.pk})
+            self.client.login(username='testuser', password='12345')
+            response = self.client.post(self.edit_comment_url, {
+                'comment': 'Updated Comment',
+            })
+
+            self.comment.refresh_from_db()
+            self.assertEqual(self.comment.comment, 'Updated Comment')
+            
+    def test_delete_comment_successfully(self):
+        self.client.login(username='testuser', password='12345')
+        self.comment = Comment.objects.create(
+            user_id=self.user, 
+            post_id=self.post, 
+            comment="Test Comment"
+        )
+        self.delete_comment_url = reverse('deleteComment', kwargs={'pk': self.comment.pk})
+        initial_comment_count = Comment.objects.count()
+        response = self.client.post(self.delete_comment_url)
+
+        self.assertEqual(Comment.objects.count(), initial_comment_count - 1)
+        with self.assertRaises(Comment.DoesNotExist):
+            Comment.objects.get(pk=self.comment.pk)
