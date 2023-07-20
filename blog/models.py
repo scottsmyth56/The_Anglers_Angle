@@ -105,6 +105,8 @@ class Competition(models.Model):
     featuredImage = CloudinaryField(
         'image', default='placeholder', null=True, blank=True)
 
+    def __str__(self):
+        return self.title
 
 class CompetitionUser(models.Model):
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
