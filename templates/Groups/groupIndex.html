@@ -7,7 +7,7 @@
 <div class="container-fluid group-index-container">
     <div class="row">
 
-        <div class="col-md-8">
+        <div class="col-md-10">
             <div class="d-flex justify-content-start">
 
                 <div class="dropdown">
@@ -38,14 +38,14 @@
             </div>
 
             <h2 class="action-header" style="margin-top:10px">{{ object.group_name }}</h2>
-            <p class="description-text-white">{{ object.description|truncatechars:100 }}</p>
+            <p class="description-text-white">{{ object.description }}</p>
 
             <h3 class="action-header">Posts in Group</h3>
             {% include 'Posts/post_list.html' %}
         </div>
 
 
-        <div class="col-md-4">
+        <div class="col-md-2">
             <h3 class="action-header">Group Members</h3>
             <ul class="list-group">
                 {% for member in group_member %}
