@@ -303,13 +303,21 @@
 
 .group-index-container {
     background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-        url("../images/group-bck.webp") no-repeat center center;
+        url("https://res.cloudinary.com/dgeabxcpy/image/upload/v1689935866/static/images/login-background.f16044ced1d9.jpg") no-repeat center center;
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
     padding: 20px;
 }
+.profile-background{
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+        url("https://res.cloudinary.com/dgeabxcpy/image/upload/v1689945379/backgrounds/profile-background_yvduhy.jpg") no-repeat center center !important;
+}
 
+.competition-view-background{
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+        url("https://res.cloudinary.com/dgeabxcpy/image/upload/v1689945623/backgrounds/competition-background_e9cikh.jpg") no-repeat center center;
+}
 .description-text-white {
     color: white;
     font-family: 'Montserrat', sans-serif;
