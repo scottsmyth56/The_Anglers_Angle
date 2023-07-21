@@ -304,7 +304,7 @@
 .group-container {
     padding: 20px;
     background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-        url("../images/group-bck.webp") no-repeat center center;
+        url("https://res.cloudinary.com/dgeabxcpy/image/upload/v1689947941/backgrounds/group-bck.7c463e9f37f8.jpg") no-repeat center center;
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
