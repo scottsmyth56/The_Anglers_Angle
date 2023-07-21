@@ -63,8 +63,15 @@
     align-items: center;
     justify-content: center;
     overflow: auto;
-    margin: 30px
+    margin: 30px;
+    height:100vh;
 }
+.outer-container-register {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: auto;
+    margin: 30px;}
 
 .container-login {
     max-width: 400px;
@@ -191,6 +198,7 @@
     background-position: center;
     background-repeat: no-repeat;
     padding: 20px;
+    height: 100vh;
 }
 
 .form-outer {
@@ -252,6 +260,7 @@
     background-position: center;
     background-repeat: no-repeat;
     padding: 20px;
+    height: 100vh;
 }
 
 .post-title {
@@ -299,6 +308,7 @@
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
+    height: 100vh;
 }
 
 .group-index-container {
@@ -317,6 +327,7 @@
 .competition-view-background{
     background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
         url("https://res.cloudinary.com/dgeabxcpy/image/upload/v1689945623/backgrounds/competition-background_e9cikh.jpg") no-repeat center center;
+    height: 100vh;
 }
 .description-text-white {
     color: white;
@@ -341,4 +352,13 @@
     color: red;
     text-align: center;
     font-weight: 700;
+}
+
+@media (max-width: 960px) {
+   .group-container{
+    height: auto;
+   }
+   .competition-view-background{
+    height: auto;
+   }
 }

@@ -8,21 +8,21 @@ import os
 
 
 def register(request):
-    """
-    View for user registration.
-    """
     if request.method == 'POST':
         form = RegistrationForm(request.POST)
-    if form.is_valid():
-        user = form.save(commit=False)
-        user.username = user.username.lower()
-        user.save()
-        return redirect('login')
+        if form.is_valid():
+            user = form.save(commit=False)
+            user.username = user.username.lower()
+            user.save()
+            return redirect('login')
+        else:
+            for field, errors in form.errors.items():
+                for error in errors:
+                    messages.error(request, error)
     else:
-        for field in form.errors:
-            message = form.errors[field][0]
-            messages.error(request, message)
-        return render(request, 'Auth/register_user.html', {'form': form})
+        form = RegistrationForm()
+
+    return render(request, 'Auth/register_user.html', {'form': form})
 
 
 def login(request):
