@@ -20,7 +20,7 @@ The Deployed Site is available [HERE](https://the-anglers-angle-b8d0becc6882.her
   + [Colour](#colour "Colour")
   + [Typography](#typography "Typography")
   + [Layout](#layout "Layout")
-  + [WireFrames](#wireframe "WireFrames")
+  + [Wireframes](#wireframes "Wireframes")
 + [Features](#features "Features")
   + [Current Features](#current-features "Current Features")
   + [Future Features](#future-features "Future Features")
@@ -88,7 +88,9 @@ The main typography used throughout the site was `Montserrat`.This was chosen to
 
 The  goal of the layout for this site was to provide easy navigation and to distuingish between the sites elements with ease. This is achieved through the use of bootstrap layout and bootstrap cards. 
 
-The Wireframes for the site layout can be viewed below
+### Wireframes
+
+The Wireframes for the site layout can be viewed [HERE](docs/wireframes)
 
 
 
@@ -191,7 +193,7 @@ View logic was asserted through the use of Unit Tests and had an overall coverag
 
 ### Manual Tests
 
-Manual Test results can be found [HERE](docs/testing.md)
+Manual Test results can be found [HERE](testing.md)
 
 
 ### Unfixed Bugs
