@@ -165,6 +165,7 @@
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
+    height: 100vh;
 }
 
 .card-outer {
@@ -255,12 +256,11 @@
 .post-container {
     padding: 20px;
     background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-        url("../images/addPost-bck.webp") no-repeat center center;
+        url("https://res.cloudinary.com/dgeabxcpy/image/upload/v1689950910/backgrounds/post-detailed_ex3vit.jpg") no-repeat center center;
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    padding: 20px;
-    height: 100vh;
+    padding: 30px;
 }
 
 .post-title {
@@ -318,16 +318,33 @@
     background-position: center;
     background-repeat: no-repeat;
     padding: 20px;
+    /* height: 100vh; */
 }
 .profile-background{
     background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
         url("https://res.cloudinary.com/dgeabxcpy/image/upload/v1689945379/backgrounds/profile-background_yvduhy.jpg") no-repeat center center !important;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    padding: 20px;
 }
 
 .competition-view-background{
     background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
         url("https://res.cloudinary.com/dgeabxcpy/image/upload/v1689945623/backgrounds/competition-background_e9cikh.jpg") no-repeat center center;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    padding: 20px;
     height: 100vh;
+}
+.competition-detailed-view-background{
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+    url("https://res.cloudinary.com/dgeabxcpy/image/upload/v1689945623/backgrounds/competition-background_e9cikh.jpg") no-repeat center center;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    padding: 20px;
 }
 .description-text-white {
     color: white;
@@ -358,7 +375,17 @@
    .group-container{
     height: auto;
    }
-   .competition-view-background{
+
+   .index-body{
     height: auto;
    }
+   
 }
+@media (max-width: 700px) {
+  
+    .competition-view-background{
+     height: auto;
+    }
+   
+    
+ }

@@ -38,7 +38,7 @@
             </div>
 
             <h2 class="action-header" style="margin-top:10px">{{ object.group_name }}</h2>
-            <p class="description-text-white">{{ object.description }}</p>
+            <p class="description-text-white">{{ object.description|truncatechars:100 }}</p>
 
             <h3 class="action-header">Posts in Group</h3>
             {% include 'Posts/post_list.html' %}
