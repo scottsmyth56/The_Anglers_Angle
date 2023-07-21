@@ -39,7 +39,8 @@ class addGroup(LoginRequiredMixin, generic.CreateView):
         form.instance.is_approved = False
         messages.success(
             self.request,
-            f'Group "{form.instance.group_name}" created successfully, waiting for admin approval')
+            f'Group "{form.instance.group_name}" ' +
+            "created successfully, waiting for admin approval")
         return super().form_valid(form)
 
     def form_invalid(self, form):

@@ -93,7 +93,8 @@ def change_password(request):
         else:
             messages.error(
                 request,
-                'Please confirm new passwords match and your current password is correct and try again')
+                'Please confirm new passwords match and your'
+                + 'current password is correct and try again')
     else:
         form = ResetPasswordForm(request.user)
     return render(request, 'Auth/change_password.html', {'form': form})

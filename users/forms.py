@@ -103,13 +103,15 @@ class ResetPasswordForm(forms.Form):
 
     def clean_current_password(self):
         """
-        Validates that the current_password field contains the correct password for the current user.
+        Validates that the current_password field
+        contains the correct password for the current user.
         """
         current_password = self.cleaned_data.get('current_password')
 
         if not check_password(current_password, self.user.password):
             raise forms.ValidationError(
-                'Your current password was entered incorrectly. Please enter it again.')
+                'Your current password was entered incorrectly.' +
+                ' Please enter it again.')
 
         return current_password
 
@@ -129,7 +131,8 @@ class ResetPasswordForm(forms.Form):
 
     def save(self, commit=True):
         """
-        Sets the user's password to the value provided in the confirm_new_password field.
+        Sets the user's password to the value
+        provided in the confirm_new_password field.
         """
         self.user.set_password(self.cleaned_data['confirm_new_password'])
         if commit:

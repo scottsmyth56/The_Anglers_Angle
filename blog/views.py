@@ -1,6 +1,6 @@
 
 from django.shortcuts import render, get_object_or_404, redirect
-from models import Post, Comment, Like
+from blog.models import Post, Comment, Like
 from django.views import generic, View
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -9,7 +9,8 @@ from django.urls import reverse_lazy
 
 class index(LoginRequiredMixin, generic.ListView):
 
-    """This class represents the index page. It requires the user to be logged in."""
+    """This class represents the index page.
+    It requires the user to be logged in."""
 
     model = Post
     queryset = Post.objects.order_by('timestamp')
@@ -24,7 +25,8 @@ class index(LoginRequiredMixin, generic.ListView):
 
 class PostList(LoginRequiredMixin, generic.ListView):
 
-    """This class represents the list of all posts, visible only to logged-in users."""
+    """This class represents the list of all posts,
+        visible only to logged-in users."""
 
     model = Post
     queryset = Post.objects.order_by('timestamp')
@@ -89,7 +91,6 @@ class viewPost(LoginRequiredMixin, generic.DetailView):
 
     def get_object(self):
         obj = super().get_object()
-        print (obj.user_id)
         return obj
 
     def get_context_data(self, **kwargs):
@@ -114,7 +115,8 @@ class likePost(LoginRequiredMixin, View):
 
 class unlikePost(LoginRequiredMixin, View):
 
-    '''This class provides the unlike post functionality for logged-in users.'''
+    '''This class provides the unlike post
+    functionality for logged-in users.'''
 
     def post(self, request, pk):
         post = get_object_or_404(Post, pk=pk)
@@ -124,7 +126,8 @@ class unlikePost(LoginRequiredMixin, View):
 
 class addComment(LoginRequiredMixin, View):
 
-    '''This class provides the add comment on a post functionality for logged-in users.'''
+    '''This class provides the add comment on a post
+    functionality for logged-in users.'''
 
     def post(self, request, pk):
         post = get_object_or_404(Post, pk=pk)
@@ -135,7 +138,8 @@ class addComment(LoginRequiredMixin, View):
 
 class editComment(LoginRequiredMixin, generic.UpdateView):
 
-    '''This class provides the edit comment on a post functionality for logged-in users.'''
+    '''This class provides the edit comment on a
+    post functionality for logged-in users.'''
 
     model = Comment
     fields = ['comment']
@@ -149,7 +153,8 @@ class editComment(LoginRequiredMixin, generic.UpdateView):
 
 class deleteComment(LoginRequiredMixin, generic.DeleteView):
 
-    '''This class provides the delete comment on a post functionality for logged-in users.'''
+    '''This class provides the delete comment on a
+    post functionality for logged-in users.'''
 
     model = Comment
     template_name = 'Posts/delete_comment.html'
