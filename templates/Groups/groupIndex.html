@@ -3,24 +3,16 @@
 
 {% block content %}
 
-{% if messages %}
-
-{% for message in messages %}
-<div class="alert alert-{{ message.tags }} message-index">
-    {{ message }}
-</div>
-{% endfor %}
-
-{% endif %}
 
 <div class="container-fluid group-index-container">
     <div class="row">
-    
+
         <div class="col-md-8">
             <div class="d-flex justify-content-start">
-              
+
                 <div class="dropdown">
-                    <button class="btn btn-primary dropdown-toggle mr-2" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                    <button class="btn btn-primary dropdown-toggle mr-2" type="button" id="dropdownMenuButton"
+                        data-bs-toggle="dropdown" aria-expanded="false">
                         Actions
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -30,15 +22,18 @@
                         <li><a class="dropdown-item" href="{% url 'enterGroup' object.group_id %}">Join Group</a></li>
                         {% endif %}
                         {% if object.creator.username == user.username %}
-                        <li><a class="dropdown-item" href="{% url 'editGroup' object.group_id %}">Edit Group Details</a></li>
-                        <li><a class="dropdown-item" href="{% url 'deleteGroup' object.group_id %}">Remove Group</a></li>
+                        <li><a class="dropdown-item" href="{% url 'editGroup' object.group_id %}">Edit Group Details</a>
+                        </li>
+                        <li><a class="dropdown-item" href="{% url 'deleteGroup' object.group_id %}">Remove Group</a>
+                        </li>
                         {% endif %}
                     </ul>
                 </div>
 
-               
+
                 {% if group_user %}
-                <a class="btn btn-primary" style="margin-left:5px" href="{% url 'addGroupPost' object.group_id %}">Post in Group</a>
+                <a class="btn btn-primary" style="margin-left:5px" href="{% url 'addGroupPost' object.group_id %}">Post
+                    in Group</a>
                 {% endif %}
             </div>
 
@@ -49,7 +44,7 @@
             {% include 'Posts/post_list.html' %}
         </div>
 
-       
+
         <div class="col-md-4">
             <h3 class="action-header">Group Members</h3>
             <ul class="list-group">

@@ -105,7 +105,7 @@ class editCompetition(LoginRequiredMixin, generic.UpdateView):
 
     def form_valid(self, form):
         form.instance.user_id = self.request.user
-        messages.success(self.request, "Post updated Succesfully")
+        messages.success(self.request, "Competition updated Succesfully")
         return super().form_valid(form)
 
 
@@ -118,5 +118,5 @@ class deleteCompetition(LoginRequiredMixin, generic.DeleteView):
     success_url = reverse_lazy("competitions")
 
     def delete(self, request, *args, **kwargs):
-        messages.success(request, "Post Deleted Successfully")
+        messages.success(request, "Competition Deleted Successfully")
         return super().delete(request, *args, **kwargs)
