@@ -154,7 +154,7 @@
 
 .index-body {
     background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-        url("https://res.cloudinary.com/dgeabxcpy/image/upload/v1689935864/static/images/index-background.259800c6c5eb.jpg") no-repeat center center;
+        url("https://res.cloudinary.com/dgeabxcpy/image/upload/v1689935864/backgrounds/index-background.259800c6c5eb.jpg") no-repeat center center;
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -186,7 +186,7 @@
 
 .post-body {
     background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-        url("https://res.cloudinary.com/dgeabxcpy/image/upload/v1689935862/static/images/addPost-bck.bb31852f6d8f.jpg") no-repeat center center;
+        url("https://res.cloudinary.com/dgeabxcpy/image/upload/v1689935862/backgrounds/addPost-bck.bb31852f6d8f.jpg") no-repeat center center;
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -229,7 +229,7 @@
 
 .delete-post-body {
     background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-        url("../images/addPost-bck.webp") no-repeat center center;
+        url("https://res.cloudinary.com/dgeabxcpy/image/upload/v1689937537/backgrounds/delete-post-bck_o6ycfm.jpg") no-repeat center center;
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
